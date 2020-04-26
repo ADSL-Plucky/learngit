@@ -1,0 +1,1930 @@
+214	the
+140	a
+81	to
+81	is
+76	of
+74	in
+63	>>>
+59	function
+57	...
+55	and
+50	be
+46	for
+34	or
+34	are
+32	it
+32	The
+31	that
+31	if
+31	>>>
+
+30	arguments
+29	by
+28	an
+27	can
+26	def
+25	=
+25	#
+24	you
+24	as
+23	This
+22	keyword
+20	return
+20	more
+20	...
+
+19	with
+17	value
+16	call
+15	not
+14	when
+14	used
+14	parameters
+14	name
+14	may
+14	but
+14	argument
+14	For
+14	2
+14	1
+13	which
+13	statement
+13	positional
+13	line
+13	from
+12	use
+12	passed
+12	object
+12	list
+12	functions
+11	will
+11	on
+11	number
+10	they
+10	only
+10	no
+10	have
+10	following
+10	first
+10	example
+10	called
+10	at
+10	all
+9	this
+9	should
+9	3
+
+9	1,
+9	/
+9	*
+8	x
+8	while
+8	symbol
+8	some
+8	parameter
+8	over
+8	even
+8	else
+8	also
+8	It
+8	In
+8	If
+8	Found
+8	+
+7	up
+7	see
+7	possible
+7	pass
+7	new
+7	most
+7	indentation
+7	function.
+7	formal
+7	arguments.
+7	about
+7	3
+6	write
+6	want
+6	using
+6	through
+6	than
+6	so
+6	sequence
+6	returns
+6	recent
+6	print("--
+6	prime
+6	other
+6	order
+6	must
+6	local
+6	last):
+
+6	has
+6	definition
+6	any
+6	after
+6	Use
+6	TypeError:
+6	Traceback
+6	Python
+6	File
+6	Fibonacci
+6	==
+6	<module>
+
+6	2,
+6	1
+
+6	(most
+6	"<stdin>",
+5	without
+5	variables
+5	there
+5	string
+5	since
+5	series
+5	separate
+5	same
+5	really
+5	range()
+5	print(arg)
+
+5	positional-only
+5	position
+5	one
+5	method
+5	lines
+5	lambda
+5	just
+5	items
+5	form
+5	end
+5	elif
+5	documentation
+5	different
+5	defined
+5	define
+5	default
+5	code
+5	clause
+5	argument
+
+5	always
+5	a,
+5	A
+5	8
+5	2
+
+5	0:
+
+5	0
+4	|
+4	your
+4	would
+4	we
+4	variable
+4	types
+4	try
+4	then
+4	table
+4	such
+4	status
+4	statements
+4	start
+4	runny,
+4	parrot
+4	out
+4	object’s
+4	number
+
+4	need
+4	names
+4	named
+4	makes
+4	loop
+4	like
+4	keyword.
+4	introduces
+4	i
+4	got
+4	good
+4	global
+4	giving
+4	example:
+
+4	equals
+4	end='
+4	enclosing
+4	do
+4	definition:
+
+4	containing
+4	built-in
+4	break
+4	between
+4	b
+4	arguments
+
+4	When
+4	There
+4	<
+4	6
+
+4	/,
+4	--
+4	(see
+4	'name'
+4	')
+
+3	…
+3	very
+3	values
+3	uses
+3	user
+3	useful
+3	tuple
+3	three
+3	these
+3	their
+3	takes
+3	statement.
+3	statement,
+3	specify
+3	small
+3	retries
+3	result
+3	required
+3	read
+3	range(2,
+3	pass
+
+3	part
+3	optional
+3	ok
+3	occur
+3	normal
+3	next
+3	n
+
+3	make
+3	loop,
+3	look
+3	list,
+3	kwd_only=3)
+
+3	its
+3	iterate
+3	it.
+
+3	followed
+3	expression
+3	example,
+3	don’t
+3	does
+3	docstrings
+3	definition,
+3	combined_example(1,
+3	collection
+3	coding
+3	classes
+3	calls
+3	calling
+3	body
+3	before
+3	available
+3	arguments:
+3	argument,
+3	arbitrary
+3	another
+3	annotations
+3	action,
+3	[3,
+3	We
+3	Statements
+
+3	Python,
+3	PEP
+3	More
+3	Keyword
+3	Here
+3	Function
+3	Do
+3	Arguments
+
+3	Argument
+3	<class
+3	:
+3	9
+
+3	5
+3	4
+
+3	4
+3	0,
+3	*,
+2	|
+
+2	zero
+2	wouldn't",
+2	whitespace
+2	where
+2	were
+2	we're
+2	ways:
+
+2	voltage,
+2	very,
+2	valid
+2	users
+2	user-defined
+2	user,
+2	unpacked
+2	unexpected
+2	type
+2	tools
+2	this:
+
+2	take
+2	table,
+2	syntactically
+2	summary
+2	successive
+2	subsequent
+2	style.
+2	style
+2	strip
+2	string.
+2	string,
+2	stiff',
+2	state='a
+2	state,
+2	standard=2,
+2	standard,
+2	spaces
+2	sorry,
+2	sir.",
+
+2	sir.
+
+2	several
+2	second
+2	runs
+2	result.append(a)
+2	result
+
+2	restricted
+2	rest
+2	reference
+2	receives
+2	really,
+2	readable
+2	rather
+2	range(0,
+2	put",
+2	put
+2	printed
+2	print(n,
+2	print("if
+2	print("Found
+2	print
+2	prevent
+2	positional-only,
+2	pos_or_kwd,
+2	pos2,
+2	point
+2	place
+2	parrot(voltage=1000)
+2	parrot(voltage,
+2	parrot('a
+2	parameters.
+
+2	parameters.
+2	parameter.
+2	overwrite
+2	optional.
+2	only
+
+2	once.
+2	numbers
+2	number",
+2	num)
+
+2	num
+2	nothing,
+2	n:
+
+2	n."""
+
+2	n
+2	mutable
+2	multiple
+2	multi-line
+2	methods.
+2	meaning
+2	match
+2	mark
+2	literal
+2	list.
+2	let
+2	last
+2	larger
+2	languages,
+2	kwds
+
+2	kwd2):
+
+2	kwd1,
+2	keyword.
+
+2	keyword-only
+2	iteration
+2	iterating
+2	iterables
+2	iterable
+2	interpreter
+2	integer:
+2	instance,
+2	inside
+2	indices
+2	how
+2	helps
+2	happens
+2	given
+
+2	get
+2	generates
+2	function’s
+2	functions,
+2	function,
+2	found
+2	foo(name,
+2	foo(1,
+2	file?',
+2	fib
+
+2	fib
+2	f100
+2	f(pos1,
+2	f(a,
+2	f
+2	explicitly
+2	evaluated
+2	enter
+2	else:
+
+2	eggs
+
+2	doesn’t
+2	doesn't
+2	document
+2	directly
+2	dictionary
+2	developer
+2	determine
+2	describing
+2	definition.
+2	default,
+2	created
+2	create
+2	conventions
+2	convention
+2	continue
+2	condition
+2	concat("earth",
+2	combined_example()
+2	colon
+2	classes,
+2	changes
+2	certain
+2	case
+2	cannot
+2	call.
+
+2	bit
+2	best
+2	being
+2	b,
+2	assigned
+2	ask_ok('OK
+2	arithmetic
+2	arguments:
+
+2	arguments,
+2	anything.
+
+2	allows
+2	a+b
+
+2	[]
+
+2	[1,
+2	[0,
+2	VERY
+2	True:
+
+2	True
+
+2	To
+2	Strategy:
+2	Shop
+2	Python’s
+2	Positional
+2	Now
+2	None
+2	No,
+2	Look
+2	Lists
+
+2	Lambda
+2	L.append(a)
+
+2	L
+
+2	L
+2	It's
+2	I'm
+2	Functions
+
+2	Finally,
+2	Documentation
+2	Defining
+2	C,
+2	Another
+2	8,
+2	6,
+2	5]
+
+2	55
+2	5,
+2	5
+
+2	42
+
+2	4,
+2	3]
+
+2	34
+2	3,
+2	3)
+
+2	2})
+
+2	21
+2	13
+2	10):
+
+2	10)
+
+2	0
+
+2	-
+2	**{'name':
+2	**kwds):
+
+2	**kwds
+2	(with
+2	(e.g.
+2	(3,
+2	(2,
+2	'three'),
+2	'str'>,
+2	'one'),
+2	'
+2	%
+2	"volts
+2	"mars",
+2	"It's
+2	"!")
+
+1	﻿4.
+1	“equivalent”
+1	‘step’):
+
+1	‘keyword-only’
+1	‘else
+1	‘elif’
+1	‘belongs’
+1	—
+1	{}
+
+1	{'ham':
+1	{"voltage":
+1	zero')
+
+1	you:
+
+1	yes
+1	x:
+1	x,
+1	written.
+1	written
+1	writes
+1	write_multiple_items(file,
+1	write,
+1	wrapped
+1	wouldn't
+1	working
+1	work
+1	words:
+
+1	words,
+1	words
+1	within
+1	window
+1	while),
+1	whether
+1	wherever
+1	whereas
+1	what
+1	well-known
+1	ways
+1	way
+1	was
+1	warning:
+1	w
+1	volts
+1	voltage=220)
+1	voltage=1000000)
+1	visually
+1	verb
+1	variadic
+1	variables,
+1	values,
+1	value.
+
+1	value.
+1	value,
+1	usually
+1	usual,
+1	usual
+1	users[user]
+
+1	users.items():
+
+1	users.copy().items():
+
+1	user.
+1	used,
+1	until
+1	unpack
+1	unknown
+1	understandable
+1	type='Norwegian
+1	type.
+1	type,
+1	type).
+1	type)
+
+1	two
+1	twists.
+
+1	tuple:
+
+1	tricky
+1	tremendously
+1	too).
+1	to;
+1	time
+1	thus,
+1	thus
+1	thousand',
+1	those
+1	this!
+
+1	third
+1	thinking
+1	thing
+1	the",
+1	that.
+
+1	that
+
+1	tests
+1	tested
+1	terminates
+1	terminated
+1	target
+1	talk
+1	tabs.
+
+1	tabs
+1	tables
+1	table;
+1	table.
+1	syntactic
+1	symbols
+1	switch
+1	suppressed
+1	supply
+1	sum(range(4))
+1	sum():
+
+1	sum
+1	suitable
+1	sugar
+1	substitute
+1	subsection)
+1	styles;
+1	stripped.
+1	stripped
+1	string’s
+1	strings:
+
+1	strings.
+
+1	string),
+1	strange
+1	straight-forward
+1	str:
+
+1	str,
+1	str
+1	stored
+1	store
+1	stop
+1	step
+1	status
+
+1	statement’s
+1	statements:
+1	statement.)
+
+1	statement),
+1	state='pushing
+1	state
+1	standard_arg,
+1	standard_arg(arg=2)
+
+1	standard_arg(arg):
+
+1	standard_arg(2)
+
+1	speaking
+1	spam
+1	spaces,
+1	space.
+
+1	sometimes
+1	something
+1	solution:
+
+1	slightest
+1	sketch="Cheese
+1	sketch
+1	situation
+1	single
+1	simple
+1	silently
+1	side-by-side
+1	side
+1	shown
+1	short,
+1	short
+1	shopkeeper="Michael
+1	shopkeeper
+1	shared
+1	serves
+1	series,
+1	sequence;
+1	sequence.
+1	sequence,
+1	separator,
+1	separating
+1	separately,
+1	sep="/"):
+
+1	sep=".")
+
+1	sep.join(args)
+
+1	sense
+1	self
+1	seen
+1	section
+1	searches
+1	scope:
+
+1	scope,
+1	scoop
+1	say
+1	saving
+1	right.
+1	reverse
+1	returned
+1	retries=4,
+1	result.
+1	restrictions
+1	restriction:
+
+1	restrict
+1	response')
+
+1	requiring
+1	requires
+1	required.
+1	renaming
+1	reminder='Please
+1	remaining
+1	relying
+1	referred
+1	references
+1	referenced.
+
+1	reference,
+1	recognized
+1	receive
+1	real
+1	readability
+1	read).
+1	range:
+
+1	range.
+1	range(len(a)):
+
+1	range(5,
+1	range(5):
+
+1	range(10)
+1	range(-10,
+1	range
+1	raise
+1	quotes
+1	quit?')
+
+1	purpose.
+1	pun
+1	provided
+1	promotes
+1	projects
+1	progressions:
+
+1	progression
+1	program
+1	produce
+1	process
+1	procedure
+1	printing
+1	print:
+
+1	print(w,
+1	print(reminder)
+
+1	print(range(10))
+
+1	print(pos_only,
+1	print(my_function.__doc__)
+
+1	print(kw,
+1	print(i,
+1	print(i)
+
+1	print(fib(0))
+
+1	print(f(3))
+
+1	print(f(2))
+
+1	print(f(1))
+
+1	print(a,
+1	print():
+
+1	print()
+
+1	print('Zero')
+
+1	print('Single')
+
+1	print('Negative
+1	print('More')
+
+1	print("E's",
+1	print("Arguments:",
+1	print("Annotations:",
+1	print("-"
+1	print
+
+1	present,
+1	present
+1	precisely,
+1	practice
+1	potential
+1	possible,
+1	positional-or-keyword,
+1	positional-or-keyword
+1	positional-only.
+1	positional,
+1	position,
+1	pos_only_arg(arg=1)
+
+1	pos_only_arg(arg,
+1	pos_only_arg(1)
+
+1	pos_only_arg()
+1	pos_only_arg
+1	points
+1	point;
+1	plumage,
+1	plain
+1	places
+1	placed
+1	place-holder
+1	pieces
+1	period.
+
+1	performance,
+1	people
+1	paying
+1	passed.
+
+1	passed,
+1	parts,
+1	parser
+1	parrot(voltage=5.0,
+1	parrot(voltage=1000000,
+1	parrot(actor='John
+1	parrot(action='VOOOOOM',
+1	parrot(110,
+1	parrot(1000)
+1	parrot(**d)
+
+1	parrot()
+1	parenthesized
+1	parameter’s
+1	parameters’
+1	parameters,
+1	parameters
+
+1	parameter.
+
+1	paragraphs
+1	pairs.sort(key=lambda
+1	pairs
+
+1	pairs
+1	pair[1])
+
+1	pair:
+1	own.
+
+1	own
+1	out.
+
+1	others.
+1	others
+1	or,
+1	optionally
+1	option
+1	operators
+1	operation).
+1	opening
+1	online
+1	one.
+1	on,
+1	off
+1	of",
+1	occurs.
+1	occurs,
+1	occurs
+1	occur.
+
+1	occur,
+1	obtain
+1	objects;
+1	objects
+1	object).
+1	obj.methodname,
+1	obj
+1	numbers:
+
+1	numbers,
+1	number,
+1	number')
+
+1	nothing.
+1	normally).
+
+1	normally
+1	nonlocal
+1	non-optional
+1	non-keyword
+1	non-blank
+1	non-ASCII
+1	no!')
+
+1	nice
+1	never
+1	nesting
+1	nested
+1	negative;
+1	names.
+1	name,
+1	name).
+1	n//x)
+
+1	n):
+
+1	my_function():
+
+1	modifies
+1	modified
+1	missing
+
+1	minimal
+1	million',
+1	million",
+1	million
+1	might
+1	methods,
+1	methods).
+
+1	methodname
+1	metadata
+1	mechanism:
+
+1	meant
+1	means
+1	meaning,
+1	maybe
+1	matters,
+1	markers
+1	many
+1	mandatory
+1	make_incrementor(n):
+
+1	make_incrementor(42)
+
+1	maintain
+1	lowercase_with_underscores
+1	loop’s
+1	loop:
+
+1	loop.
+
+1	longer,
+1	logically
+1	little
+
+1	literals
+1	literal;
+1	literal.)
+1	list).
+1	list(range(4))
+
+1	list(range(3,
+1	list(range(*args))
+1	list().
+
+1	list
+
+1	line,
+1	like:
+
+1	life',
+1	level.
+1	letter
+1	less
+1	length
+1	len(w))
+
+1	len()
+1	legal
+1	left
+1	least
+1	leading
+1	large
+1	languages.
+
+1	languages
+1	language
+1	lamb
+
+1	kwd_only_args
+1	kwd_only_arg(arg=3)
+
+1	kwd_only_arg(3)
+
+1	kwd_only_arg(*,
+1	kwd_only_arg()
+1	kwd_only):
+
+1	kwd_only)
+
+1	kwarg=value.
+1	kw
+1	known
+1	kind,
+1	kind)
+
+1	kind
+1	keywords[kw])
+
+1	keywords:
+
+1	keywords.
+
+1	keywords
+1	keyword:
+
+1	keyword-only.
+
+1	keyword-only.
+1	keyword-only,
+1	keyword,
+1	keyword
+
+1	keyboard
+1	key:
+
+1	key
+1	keep
+1	it’s
+1	iterates
+1	iterable,
+1	it:
+
+1	it.",
+1	it.")
+
+1	it.
+1	it,
+1	it
+
+1	isn’t.
+1	is,
+1	invalid:
+
+1	introduced,
+1	introduced
+1	introduce
+1	into
+1	interrupt
+1	international
+1	interactively
+1	intended):
+
+1	int(input("Please
+1	instead:
+
+1	instead
+1	instances
+1	inserted
+1	input(prompt)
+
+1	input
+1	innermost
+1	initlog(*args):
+
+1	information).
+
+1	information
+1	indicating
+1	indicated
+1	indicate
+1	indented.
+
+1	indented
+1	indentation.
+1	indentation,
+1	increment
+1	includes
+1	include
+1	important.
+1	important
+1	implement
+1	ignored:
+
+1	if’,
+1	identifiers
+1	idea,
+1	however,
+1	here
+1	handy.
+1	ham,
+1	ham
+1	halting
+1	had
+
+1	habit
+1	guide
+1	guidance:
+
+1	guaranteed
+1	greater
+1	given
+1	generated
+1	generally
+1	general
+1	g(3,
+1	future.
+
+1	functions.
+
+1	function:
+
+1	function:
+1	function),
+1	function(a):
+
+1	function(0,
+1	function()
+1	frequently
+1	four
+1	forms,
+1	formatting
+1	formatted)
+1	form,
+1	for)
+1	foo()
+1	follows:
+
+1	follow
+1	flow
+1	finding
+1	finally
+1	final
+1	files
+1	file.write(separator.join(args))
+
+1	fib2(n):
+1	fib2(100)
+1	fib(n):
+1	fib(2000)
+
+1	fib(0)
+
+1	fewer
+1	fell
+1	features:
+
+1	fashion,
+1	fancy
+1	familiar
+1	false
+1	fails
+1	factor
+
+1	fact,
+1	fact
+1	f.__annotations__)
+
+1	f(ham:
+1	f(arg=i):
+
+1	f(100)
+
+1	f(1,
+1	f(1)
+
+1	f(0)
+
+1	f()
+
+1	f('spam')
+
+1	eye-pleasing
+1	extracted
+1	expression.
+1	expression,
+1	expression),
+1	explicit
+1	expects
+1	expect
+1	expansion
+1	exhaustion
+1	exhausted.
+1	exemplified
+1	execution
+1	executed
+1	excessive
+1	exceptions,
+1	exception
+1	except
+1	exceed
+1	evaluating
+1	etc.
+
+1	equivalent
+1	environments.
+1	enumerate()
+1	entire
+1	enforce
+1	encodings
+1	emerged
+1	element
+1	either
+1	eggs:
+1	eggs)
+
+1	eggs'
+
+1	efficient.
+
+1	effects,
+1	effect
+1	easy
+1	duplicate
+1	due
+1	done
+1	documentation,
+1	docstrings.
+
+1	docstring:
+
+1	docstring.
+1	displays.
+
+1	displays
+1	discuss
+1	differs
+1	difference
+1	dictionary,
+1	dictionaries
+1	dict)
+1	determines
+1	detail,
+1	detail
+1	desired.
+1	desired
+1	description.
+1	description,
+1	depth)
+1	denoting
+1	demonstrates
+1	demised",
+1	demised
+1	deliver
+1	del
+1	definitions,
+1	definitions
+1	defining
+1	defined:
+
+1	defenestrate
+1	daisies')
+1	d
+1	current
+1	curious
+1	creating
+1	creates
+1	course
+1	could
+1	corresponding
+1	correct
+1	copy
+
+1	copy
+1	conventions,
+1	convention.
+1	convenient
+1	control
+1	continues
+1	continue
+
+1	content
+1	contains
+1	constructs:
+1	constructs
+1	construct,
+1	consistently;
+1	consider
+1	confusion,
+1	conditional
+1	concise,
+1	concise
+1	concat(*args,
+1	compromise
+1	complex
+1	completely
+1	commonly
+1	common
+1	comments
+1	commas,
+1	comes
+1	combined_example(pos_only=1,
+1	combined_example(pos_only,
+1	combined.
+
+1	combined
+1	combine
+1	collision
+1	collection:
+
+1	collection
+
+1	code;
+1	code.
+
+1	code.
+1	code,
+1	closely:
+1	close
+1	client="John
+1	client
+1	clause;
+1	classes:
+
+1	classes.
+1	class
+1	cheeseshop(kind,
+1	cheeseshop("Limburger",
+1	characters.
+
+1	characters
+1	chapter
+1	changed
+1	chance
+1	causing
+1	cat
+1	cases,
+1	case.
+
+1	capital
+1	can’t
+1	calls:
+
+1	calls,
+1	caller
+1	callee
+1	called;
+1	call,
+1	browse
+1	brevity,
+1	breaks
+1	breaking
+1	break
+
+1	bracketing
+1	boundary:
+
+1	both
+1	borrowed
+1	boring
+1	blocks
+1	bleedin'
+1	blank,
+1	blank
+1	bind
+1	beyond
+1	better
+1	below
+
+1	belongs
+1	behaves
+1	begin
+1	becomes
+1	because
+1	b:
+1	avoid
+1	automatically
+1	attribute
+1	attention
+1	assignments
+1	ask_ok(prompt,
+1	ask_ok('Do
+1	around
+1	arguments.
+
+1	arguments),
+1	argument:
+
+1	argument:
+1	args
+1	arg):
+
+1	arg
+1	append()
+1	appear
+1	apparent
+1	any",
+1	anonymous
+1	annotation.
+1	annotated:
+
+1	amount
+1	ambiguity.
+
+1	ambiguity.
+1	although
+1	already
+1	allowing
+1	allow.
+1	albeit
+1	again!'):
+
+1	adopting
+1	adjacent
+1	adhere
+1	adds
+1	actual
+1	actor
+1	active_users[user]
+1	active_users
+1	action='voom',
+1	action='voom'):
+
+1	action='VOOOOOM')
+1	action.
+1	accumulates
+1	accepts
+1	accepted
+1	abstract
+1	above
+1	ability
+1	a[i])
+
+1	a=0)
+
+1	a+b.
+1	a
+
+1	__annotations__
+1	[a],
+1	[1]
+
+1	[(4,
+1	[(1,
+1	['cat',
+1	['Mary',
+1	You
+1	Writing
+1	Wrap
+1	Whitespace
+1	Values
+
+1	ValueError('invalid
+1	VOOM
+1	UpperCamelCase
+1	Unpacking
+1	UTF-8,
+1	Types
+1	Tuples
+1	True
+1	Tools
+
+1	Thus,
+1	They
+1	These
+1	Techniques.
+
+1	Tabs
+1	Style
+
+1	Structures,
+1	Strings.)
+1	Strings
+
+1	Statements,
+1	Special
+1	Small
+1	Sketch")
+
+1	Sketch
+
+1	Sequences).
+1	Semantically,
+1	Return
+1	Remember
+1	Recap
+
+1	Rather
+1	Positional-or-Keyword
+1	Positional-only
+1	Positional-Only
+1	Please
+1	Perhaps
+1	Pascal.
+1	Pascal),
+1	Parameters
+
+1	Parameters
+1	Parameter
+1	Palin",
+
+1	Palin
+
+1	Note
+1	Normally,
+1	None:
+
+1	None.
+
+1	None.
+1	None
+
+1	No
+1	Name
+1	MyEmptyClass:
+
+1	Most
+1	More
+
+1	Michael
+1	Methods
+1	Measure
+1	Mary
+
+1	Mapping
+1	Making
+1	Lovely
+1	Loops
+
+1	Looping
+1	Loop
+1	Looking
+1	Lines
+1	Limburger
+
+1	Limburger
+1	Likewise,
+1	Like
+1	Later
+1	Lastly,
+1	L=[]):
+
+1	L=None):
+
+1	Keyword-Only
+1	John
+1	Iterate
+1	It's",
+1	Intermezzo:
+1	Instead,
+1	Important
+1	Here’s
+1	Handling
+1	Functions
+1	Function
+
+1	Footnotes
+
+1	Flow
+1	First
+1	False
+
+1	Falling
+1	Expressions
+
+1	Exceptions.
+
+1	Examples
+
+1	Every
+1	Equivalence
+1	E's
+1	Don’t
+1	Different
+1	Default
+1	Data
+1	Create
+1	Control
+1	Consider
+1	Coming
+1	Coding
+1	Code
+1	Cleese')
+1	Cleese",
+
+1	Cleese
+
+1	Clauses
+1	Classes)
+1	Classes
+1	Cheese
+1	C),
+1	C
+1	By
+1	But
+1	Busy-wait
+1	Blue'):
+
+1	Besides
+1	Before
+1	As
+1	Arguments:
+1	Arbitrary
+1	Any
+1	Annotations:
+1	Annotations
+
+1	Annotations
+1	And
+1	An
+1	Always
+1	All
+1	Actually,
+1	ASCII
+1	API,
+1	API
+1	?
+
+1	<function
+1	987
+1	9
+1	89]
+
+1	89
+
+1	89
+1	8
+
+1	79
+1	7,
+1	7
+
+1	7
+1	6]
+
+1	610
+1	6))
+1	6
+1	55,
+1	5.
+
+1	484
+1	43
+
+1	40)
+
+1	4.8.
+1	4.7.8.
+1	4.7.7.
+1	4.7.6.
+1	4.7.5.
+1	4.7.4.
+1	4.7.3.5.
+1	4.7.3.4.
+1	4.7.3.3.
+1	4.7.3.2.
+1	4.7.3.1.
+1	4.7.3.
+1	4.7.2.
+1	4.7.1.
+1	4.7.
+1	4.6.
+1	4.5.
+1	4.4.
+1	4.3.
+1	4.2.
+1	4.1.
+1	4-space
+1	4).
+
+1	377
+1	34,
+1	3107
+1	2]
+
+1	233
+1	21,
+1	2)
+
+1	2)
+1	1:
+
+1	1597
+
+1	144
+1	13,
+1	12
+
+1	10042ed0>
+
+1	10.
+1	10,
+1	10
+1	/):
+
+1	->,
+1	->
+1	-70
+
+1	-40,
+1	-30)
+
+1	-100,
+1	-10,
+1	----------------------------------------
+
+1	-----------
+1	----------
+
+1	----------
+1	*name
+1	*arguments,
+1	*args):
+
+1	*args
+1	*:
+
+1	*-operator
+1	**name.)
+1	**name
+1	**keywords):
+
+1	**-operator:
+
+1	(where
+1	(voltage)
+1	(unless,
+1	(to
+1	(this
+1	(state,
+1	(positional
+1	(or
+1	(no
+1	(like
+1	(it’s
+1	(items
+1	(forward-slash).
+1	(except
+1	(even
+1	(easier
+1	(described
+1	(as
+1	(arguments)
+1	(allows
+1	(a
+1	(Yes,
+1	(We
+1	(More
+1	(It
+1	(Ctrl+C)
+
+1	(4,
+1	(1,
+1	(*name
+1	('y',
+1	('n',
+1	'yes'):
+
+1	'ye',
+1	'window',
+1	'two')]
+
+1	'two'),
+1	'str'>}
+
+1	'spam
+1	'return':
+1	'pos_only'
+
+1	'nope'):
+
+1	'nop',
+1	'no',
+1	'name'
+
+1	'little',
+1	'lamb']
+
+1	'jump')
+1	'is
+1	'inactive':
+
+1	'had',
+1	'four')]
+
+1	'four'),
+1	'equals',
+1	'eggs':
+1	'eggs')
+1	'earth/mars/venus'
+
+1	'earth.mars.venus'
+
+1	'defenestrate']
+
+1	'dead')
+1	'bereft
+1	'arg'
+
+1	'active':
+
+1	'a',
+1	'a'
+
+1	'Come
+1	'*',
+1	"venus",
+1	"venus")
+
+1	"state":
+1	"four
+1	"bleedin'
+1	"action":
+1	"VOOM"}
+
+1	"?")
+
+1	":",
+1	"))
+
+1	"""Return
+1	"""Print
+1	"""Do
+1	"""
+
+1	!
+
