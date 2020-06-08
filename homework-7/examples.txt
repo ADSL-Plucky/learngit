@@ -1,0 +1,2291 @@
+********************************
+tensorflow.tanh()VAE-MF-TensorFlow
+def __init__(self, sess, num_user, num_item,
+                 hidden_encoder_dim=216, hidden_decoder_dim=216, latent_dim=24,
+                 learning_rate=0.002, batch_size=64, reg_param=0,
+                 user_embed_dim=216, item_embed_dim=216, activate_fn=tf.tanh, vae=True):
+
+        if reg_param < 0 or reg_param > 1:
+            raise ValueError("regularization parameter must be in [0,1]")
+
+        self.sess = sess
+        self.num_user = num_user
+        self.num_item = num_item
+        self.hidden_encoder_dim = hidden_encoder_dim
+        self.hidden_decoder_dim = hidden_decoder_dim
+        self.latent_dim = latent_dim
+        self.learning_rate = learning_rate
+        self.batch_size = batch_size
+        self.reg_param = reg_param
+        self.user_embed_dim = user_embed_dim
+        self.item_embed_dim = item_embed_dim
+        self.activate_fn = activate_fn
+        self.vae = vae
+        self.build_model() 
+
+
+DOTA_models
+def _NonLinearity(self, code):
+    """Returns the non-linearity function pointer for the given string code.
+
+    For forwards compatibility, allows the full names for stand-alone
+    non-linearities, as well as the single-letter names used in ops like C,F.
+    Args:
+      code: String code representing a non-linearity function.
+    Returns:
+      non-linearity function represented by the code.
+    """
+    if code in ['s', 'Sig']:
+      return tf.sigmoid
+    elif code in ['t', 'Tanh']:
+      return tf.tanh
+    elif code in ['r', 'Relu']:
+      return tf.nn.relu
+    elif code in ['m', 'Smax']:
+      return tf.nn.softmax
+    return None 
+
+
+DOTA_models
+def _Apply(self, *args):
+    xtransform = self._TransformInputs(*args)
+    depth_axis = len(self._output_shape) - 1
+
+    if self.hidden is not None:
+      htransform = self._TransformHidden(self.hidden)
+      f, i, j, o = tf.split(
+          value=htransform + xtransform, num_or_size_splits=4, axis=depth_axis)
+    else:
+      f, i, j, o = tf.split(
+          value=xtransform, num_or_size_splits=4, axis=depth_axis)
+
+    if self.cell is not None:
+      self.cell = tf.sigmoid(f) * self.cell + tf.sigmoid(i) * tf.tanh(j)
+    else:
+      self.cell = tf.sigmoid(i) * tf.tanh(j)
+
+    self.hidden = tf.sigmoid(o) * tf.tanh(self.cell)
+    return self.hidden 
+
+
+DOTA_models
+def _Apply(self, *args):
+    xtransform = self._TransformInputs(*args)
+    depth_axis = len(self._output_shape) - 1
+
+    if self.hidden is not None:
+      htransform = self._TransformHidden(self.hidden)
+      f, i, j, o = tf.split(
+          value=htransform + xtransform, num_or_size_splits=4, axis=depth_axis)
+    else:
+      f, i, j, o = tf.split(
+          value=xtransform, num_or_size_splits=4, axis=depth_axis)
+
+    if self.cell is not None:
+      self.cell = tf.sigmoid(f) * self.cell + tf.sigmoid(i) * tf.tanh(j)
+    else:
+      self.cell = tf.sigmoid(i) * tf.tanh(j)
+
+    self.hidden = tf.sigmoid(o) * tf.tanh(self.cell)
+
+    self._iter += 1
+    return self.hidden 
+
+
+DOTA_models
+def get_cell(self):
+    self.cell_input_dim = self.internal_dim
+
+    def mlp(cell_input, prev_internal_state):
+      w1 = tf.get_variable('w1', [self.cell_input_dim, self.internal_dim])
+      b1 = tf.get_variable('b1', [self.internal_dim])
+
+      w2 = tf.get_variable('w2', [self.internal_dim, self.internal_dim])
+      b2 = tf.get_variable('b2', [self.internal_dim])
+
+      w3 = tf.get_variable('w3', [self.internal_dim, self.internal_dim])
+      b3 = tf.get_variable('b3', [self.internal_dim])
+
+      proj = tf.get_variable(
+          'proj', [self.internal_dim, self.output_dim])
+
+      hidden = cell_input
+      hidden = tf.tanh(tf.nn.bias_add(tf.matmul(hidden, w1), b1))
+      hidden = tf.tanh(tf.nn.bias_add(tf.matmul(hidden, w2), b2))
+
+      output = tf.matmul(hidden, proj)
+
+      return output, hidden
+
+    return mlp 
+
+
+soccer-matlab
+def __call__(self, observation, state):
+    with tf.variable_scope('policy'):
+      x = tf.contrib.layers.flatten(observation)
+      mean = tf.contrib.layers.fully_connected(
+          x,
+          self._action_size,
+          tf.tanh,
+          weights_initializer=self._mean_weights_initializer)
+      logstd = tf.get_variable('logstd', mean.shape[1:], tf.float32,
+                               self._logstd_initializer)
+      logstd = tf.tile(logstd[None, ...],
+                       [tf.shape(mean)[0]] + [1] * logstd.shape.ndims)
+    with tf.variable_scope('value'):
+      x = tf.contrib.layers.flatten(observation)
+      for size in self._value_layers:
+        x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+      value = tf.contrib.layers.fully_connected(x, 1, None)[:, 0]
+    return (mean, logstd, value), state 
+
+
+soccer-matlab
+def __call__(self, observation, state):
+    with tf.variable_scope('policy'):
+      x = tf.contrib.layers.flatten(observation)
+      for size in self._policy_layers:
+        x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+      mean = tf.contrib.layers.fully_connected(
+          x, self._action_size, tf.tanh,
+          weights_initializer=self._mean_weights_initializer)
+      logstd = tf.get_variable(
+          'logstd', mean.shape[1:], tf.float32, self._logstd_initializer)
+      logstd = tf.tile(
+          logstd[None, ...], [tf.shape(mean)[0]] + [1] * logstd.shape.ndims)
+    with tf.variable_scope('value'):
+      x = tf.contrib.layers.flatten(observation)
+      for size in self._value_layers:
+        x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+      value = tf.contrib.layers.fully_connected(x, 1, None)[:, 0]
+    return (mean, logstd, value), state 
+
+
+soccer-matlab
+def __call__(self, observation, state):
+    with tf.variable_scope('policy'):
+      x = tf.contrib.layers.flatten(observation)
+      for size in self._policy_layers[:-1]:
+        x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+      x, state = self._cell(x, state)
+      mean = tf.contrib.layers.fully_connected(
+          x, self._action_size, tf.tanh,
+          weights_initializer=self._mean_weights_initializer)
+      logstd = tf.get_variable(
+          'logstd', mean.shape[1:], tf.float32, self._logstd_initializer)
+      logstd = tf.tile(
+          logstd[None, ...], [tf.shape(mean)[0]] + [1] * logstd.shape.ndims)
+    with tf.variable_scope('value'):
+      x = tf.contrib.layers.flatten(observation)
+      for size in self._value_layers:
+        x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+      value = tf.contrib.layers.fully_connected(x, 1, None)[:, 0]
+    return (mean, logstd, value), state 
+
+
+cs294-112_hws
+def build_mlp(input_placeholder, output_size, scope, n_layers, size, activation=tf.tanh, output_activation=None):
+    """
+        Builds a feedforward neural network
+        
+        arguments:
+            input_placeholder: placeholder variable for the state (batch_size, input_size)
+            output_size: size of the output layer
+            scope: variable scope of the network
+            n_layers: number of hidden layers
+            size: dimension of the hidden layer
+            activation: activation of the hidden layers
+            output_activation: activation of the ouput layers
+
+        returns:
+            output placeholder of the network (the result of a forward pass) 
+
+        Hint: use tf.layers.dense    
+    """
+    # YOUR HW2 CODE HERE
+    with tf.variable_scope(scope):
+        h = input_placeholder
+        for i in range(n_layers):
+            h = tf.layers.dense(h, size, activation=activation, name='h{}'.format(i + 1))
+        output_placeholder = tf.layers.dense(h, output_size, activation=output_activation, name='output')
+    return output_placeholder 
+
+
+cs294-112_hws
+def build_mlp(input_placeholder, output_size, scope, n_layers, size, activation=tf.tanh, output_activation=None):
+    """
+        Builds a feedforward neural network
+        
+        arguments:
+            input_placeholder: placeholder variable for the state (batch_size, input_size)
+            output_size: size of the output layer
+            scope: variable scope of the network
+            n_layers: number of hidden layers
+            size: dimension of the hidden layer
+            activation: activation of the hidden layers
+            output_activation: activation of the ouput layers
+
+        returns:
+            output placeholder of the network (the result of a forward pass) 
+
+        Hint: use tf.layers.dense    
+    """
+    # YOUR CODE HERE
+    with tf.variable_scope(scope):
+        h = input_placeholder
+        for i in range(n_layers):
+            h = tf.layers.dense(h, size, activation=activation, name='h{}'.format(i + 1))
+        output_placeholder = tf.layers.dense(h, output_size, activation=output_activation, name='output')
+    return output_placeholder 
+
+
+cs294-112_hws
+def build_mlp(x, output_size, scope, n_layers, size, activation=tf.tanh, output_activation=None, regularizer=None):
+    """
+    builds a feedforward neural network
+
+    arguments:
+        x: placeholder variable for the state (batch_size, input_size)
+        regularizer: regularization for weights
+        (see `build_policy()` for rest)
+
+    returns:
+        output placeholder of the network (the result of a forward pass)
+    """
+    i = 0
+    for i in range(n_layers):
+        x = tf.layers.dense(inputs=x,units=size, activation=activation, name='fc{}'.format(i), kernel_regularizer=regularizer, bias_regularizer=regularizer)
+
+    x = tf.layers.dense(inputs=x, units=output_size, activation=output_activation, name='fc{}'.format(i + 1), kernel_regularizer=regularizer, bias_regularizer=regularizer)
+    return x 
+
+
+cs294-112_hws
+def build_rnn(x, h, output_size, scope, n_layers, size, activation=tf.tanh, output_activation=None, regularizer=None):
+    """
+    builds a gated recurrent neural network
+    inputs are first embedded by an MLP then passed to a GRU cell
+
+    make MLP layers with `size` number of units
+    make the GRU with `output_size` number of units
+    use `activation` as the activation function for both MLP and GRU
+
+    arguments:
+        (see `build_policy()`)
+
+    hint: use `build_mlp()`
+    """
+    #====================================================================================#
+    #                           ----------PROBLEM 2----------
+    #====================================================================================#
+    # YOUR CODE HERE
+    x = build_mlp(x, output_size, scope, n_layers, size, activation, activation, regularizer)
+    gru = tf.keras.layers.GRU(output_size, activation=activation, return_sequences=False, return_state=True)
+    x, h = gru(x, h)
+    return x, h 
+
+
+cs294-112_hws
+def build_critic(x, h, output_size, scope, n_layers, size, gru_size, recurrent=True, activation=tf.tanh, output_activation=None, regularizer=None):
+    """
+    build recurrent critic
+
+    arguments:
+        regularizer: regularization for weights
+        (see `build_policy()` for rest)
+
+    n.b. the policy and critic should not share weights
+    """
+    with tf.variable_scope(scope, reuse=tf.AUTO_REUSE):
+        if recurrent:
+            x, h = build_rnn(x, h, gru_size, scope, n_layers, size, activation=activation, output_activation=output_activation, regularizer=regularizer)
+        else:
+            x = tf.reshape(x, (-1, x.get_shape()[1]*x.get_shape()[2]))
+            x = build_mlp(x, gru_size, scope, n_layers + 1, size, activation=activation, output_activation=activation, regularizer=regularizer)
+        x = tf.layers.dense(x, output_size, activation=output_activation, name='decoder', kernel_regularizer=regularizer, bias_regularizer=regularizer)
+    return x 
+
+
+cs294-112_hws
+def build_mlp(input_placeholder, output_size, scope, n_layers, size, activation=tf.tanh, output_activation=None):
+    """
+        Builds a feedforward neural network
+        
+        arguments:
+            input_placeholder: placeholder variable for the state (batch_size, input_size)
+            output_size: size of the output layer
+            scope: variable scope of the network
+            n_layers: number of hidden layers
+            size: dimension of the hidden layer
+            activation: activation of the hidden layers
+            output_activation: activation of the ouput layers
+
+        returns:
+            output placeholder of the network (the result of a forward pass) 
+
+        Hint: use tf.layers.dense    
+    """
+    output_placeholder = input_placeholder
+    with tf.variable_scope(scope):
+        for _ in range(n_layers):
+            output_placeholder = tf.layers.dense(output_placeholder, size, activation=activation)
+        output_placeholder = tf.layers.dense(output_placeholder, output_size, activation=output_activation)
+    return output_placeholder 
+
+
+cs294-112_hws
+def build_mlp(input_placeholder, output_size, scope, n_layers, size, activation=tf.tanh, output_activation=None):
+    """
+        Builds a feedforward neural network
+        
+        arguments:
+            input_placeholder: placeholder variable for the state (batch_size, input_size)
+            output_size: size of the output layer
+            scope: variable scope of the network
+            n_layers: number of hidden layers
+            size: dimension of the hidden layer
+            activation: activation of the hidden layers
+            output_activation: activation of the ouput layers
+
+        returns:
+            output placeholder of the network (the result of a forward pass) 
+
+        Hint: use tf.layers.dense    
+    """
+    output_placeholder = input_placeholder
+    with tf.variable_scope(scope):
+        for _ in range(n_layers):
+            output_placeholder = tf.layers.dense(output_placeholder, size, activation=activation)
+        output_placeholder = tf.layers.dense(output_placeholder, output_size, activation=output_activation)
+    return output_placeholder 
+
+
+cs294-112_hws
+def call(self, inputs):
+        mean_and_log_std = self.model(inputs)
+        mean, log_std = tf.split(mean_and_log_std, num_or_size_splits=2, axis=1)
+        log_std = tf.clip_by_value(log_std, -20., 2.)
+        
+        distribution = tfp.distributions.MultivariateNormalDiag(
+            loc=mean,
+            scale_diag=tf.exp(log_std)
+        )
+        
+        raw_actions = distribution.sample()
+        if not self._reparameterize:
+            ### Problem 1.3.A
+            ### YOUR CODE HERE
+            raw_actions = tf.stop_gradient(raw_actions)
+        log_probs = distribution.log_prob(raw_actions)
+        log_probs -= self._squash_correction(raw_actions)
+
+        ### Problem 2.A
+        ### YOUR CODE HERE
+        self.actions = tf.tanh(raw_actions)
+            
+        return self.actions, log_probs 
+
+
+fine-lm
+def stacked_lstm(self, inputs, states, hidden_size, output_size, nlayers):
+    """Stacked LSTM layers with FC layers as input and output embeddings.
+
+    Args:
+      inputs: input tensor
+      states: a list of internal lstm states for each layer
+      hidden_size: number of lstm units
+      output_size: size of the output
+      nlayers: number of lstm layers
+    Returns:
+      net: output of the network
+      skips: a list of updated lstm states for each layer
+    """
+    net = inputs
+    net = slim.layers.fully_connected(
+        net, hidden_size, activation_fn=None, scope="af1")
+    for i in range(nlayers):
+      net, states[i] = self.basic_lstm(
+          net, states[i], hidden_size, scope="alstm%d"%i)
+    net = slim.layers.fully_connected(
+        net, output_size, activation_fn=tf.tanh, scope="af2")
+    return net, states 
+
+
+fine-lm
+def conv_lstm(x,
+              kernel_size,
+              filters,
+              padding="SAME",
+              dilation_rate=(1, 1),
+              name=None,
+              reuse=None):
+  """Convolutional LSTM in 1 dimension."""
+  with tf.variable_scope(
+      name, default_name="conv_lstm", values=[x], reuse=reuse):
+    gates = conv(
+        x,
+        4 * filters,
+        kernel_size,
+        padding=padding,
+        dilation_rate=dilation_rate)
+    g = tf.split(layer_norm(gates, 4 * filters), 4, axis=3)
+    new_cell = tf.sigmoid(g[0]) * x + tf.sigmoid(g[1]) * tf.tanh(g[3])
+    return tf.sigmoid(g[2]) * tf.tanh(new_cell) 
+
+
+lirpg
+def lstm(xs, ms, s, scope, nh, init_scale=1.0):
+    nbatch, nin = [v.value for v in xs[0].get_shape()]
+    nsteps = len(xs)
+    with tf.variable_scope(scope):
+        wx = tf.get_variable("wx", [nin, nh*4], initializer=ortho_init(init_scale))
+        wh = tf.get_variable("wh", [nh, nh*4], initializer=ortho_init(init_scale))
+        b = tf.get_variable("b", [nh*4], initializer=tf.constant_initializer(0.0))
+
+    c, h = tf.split(axis=1, num_or_size_splits=2, value=s)
+    for idx, (x, m) in enumerate(zip(xs, ms)):
+        c = c*(1-m)
+        h = h*(1-m)
+        z = tf.matmul(x, wx) + tf.matmul(h, wh) + b
+        i, f, o, u = tf.split(axis=1, num_or_size_splits=4, value=z)
+        i = tf.nn.sigmoid(i)
+        f = tf.nn.sigmoid(f)
+        o = tf.nn.sigmoid(o)
+        u = tf.tanh(u)
+        c = f*c + i*u
+        h = o*tf.tanh(c)
+        xs[idx] = h
+    s = tf.concat(axis=1, values=[c, h])
+    return xs, s 
+
+
+lirpg
+def __init__(self, params, ob_space, ac_space, nbatch, nsteps): #pylint: disable=W0613
+        ob_shape = (nbatch,) + ob_space.shape
+        X = tf.placeholder(tf.float32, ob_shape, name='Ob') #obs
+        with tf.name_scope('policy_new'):
+            activ = tf.tanh
+            h1 = activ(tf.nn.xw_plus_b(X, params['policy/pi_fc1/w:0'], params['policy/pi_fc1/b:0']))
+            h2 = activ(tf.nn.xw_plus_b(h1, params['policy/pi_fc2/w:0'], params['policy/pi_fc2/b:0']))
+            pi = tf.nn.xw_plus_b(h2, params['policy/pi/w:0'], params['policy/pi/b:0'])
+            logstd = params['policy/logstd:0']
+
+        pdparam = tf.concat([pi, pi * 0.0 + logstd], axis=1)
+
+        self.pdtype = make_pdtype(ac_space)
+        self.pd = self.pdtype.pdfromflat(pdparam)
+
+        self.X = X 
+
+
+HardRLWithYoutube
+def lstm(xs, ms, s, scope, nh, init_scale=1.0):
+    nbatch, nin = [v.value for v in xs[0].get_shape()]
+    with tf.variable_scope(scope):
+        wx = tf.get_variable("wx", [nin, nh*4], initializer=ortho_init(init_scale))
+        wh = tf.get_variable("wh", [nh, nh*4], initializer=ortho_init(init_scale))
+        b = tf.get_variable("b", [nh*4], initializer=tf.constant_initializer(0.0))
+
+    c, h = tf.split(axis=1, num_or_size_splits=2, value=s)
+    for idx, (x, m) in enumerate(zip(xs, ms)):
+        c = c*(1-m)
+        h = h*(1-m)
+        z = tf.matmul(x, wx) + tf.matmul(h, wh) + b
+        i, f, o, u = tf.split(axis=1, num_or_size_splits=4, value=z)
+        i = tf.nn.sigmoid(i)
+        f = tf.nn.sigmoid(f)
+        o = tf.nn.sigmoid(o)
+        u = tf.tanh(u)
+        c = f*c + i*u
+        h = o*tf.tanh(c)
+        xs[idx] = h
+    s = tf.concat(axis=1, values=[c, h])
+    return xs, s 
+
+
+HardRLWithYoutube
+def mlp(num_layers=2, num_hidden=64, activation=tf.tanh):
+    """
+    Stack of fully-connected layers to be used in a policy / q-function approximator
+
+    Parameters:
+    ----------
+
+    num_layers: int                 number of fully-connected layers (default: 2)
+    
+    num_hidden: int                 size of fully-connected layers (default: 64)
+    
+    activation:                     activation function (default: tf.tanh)
+        
+    Returns:
+    -------
+
+    function that builds fully connected network with a given input tensor / placeholder
+    """        
+    def network_fn(X):
+        h = tf.layers.flatten(X)
+        for i in range(num_layers):
+            h = activation(fc(h, 'mlp_fc{}'.format(i), nh=num_hidden, init_scale=np.sqrt(2)))
+        return h, None
+
+    return network_fn 
+
+
+ddpg-curiosity-and-multi-criteria-her
+def mlp(num_layers=2, num_hidden=64, activation=tf.tanh):
+    """
+    Stack of fully-connected layers to be used in a policy / q-function approximator
+
+    Parameters:
+    ----------
+
+    num_layers: int                 number of fully-connected layers (default: 2)
+    
+    num_hidden: int                 size of fully-connected layers (default: 64)
+    
+    activation:                     activation function (default: tf.tanh)
+        
+    Returns:
+    -------
+
+    function that builds fully connected network with a given input tensor / placeholder
+    """        
+    def network_fn(X):
+        h = tf.layers.flatten(X)
+        for i in range(num_layers):
+            h = activation(fc(h, 'mlp_fc{}'.format(i), nh=num_hidden, init_scale=np.sqrt(2)))
+        return h, None
+
+    return network_fn 
+
+
+bruno
+def function_s_t_wn(self, x, mask, name):
+        with tf.variable_scope(name):
+            xs = int_shape(x)
+            y = tf.reshape(x, (xs[0], -1))
+            ndim = int_shape(y)[-1]
+
+            y = dense_wn(y, num_units=self.n_units, name='d1', nonlinearity=self.nonlinearity)
+            y = dense_wn(y, num_units=self.n_units, name='d2', nonlinearity=self.nonlinearity)
+
+            l_scale = tf.layers.dense(y, units=ndim, activation=tf.tanh,
+                                      kernel_initializer=tf.constant_initializer(0.),
+                                      bias_initializer=tf.constant_initializer(0.), name='d_scale')
+            l_scale = tf.reshape(l_scale, shape=xs)
+            l_scale *= 1 - mask
+
+            m_translation = tf.layers.dense(y, units=ndim, activation=None,
+                                            kernel_initializer=tf.constant_initializer(0.),
+                                            bias_initializer=tf.constant_initializer(0.), name='d_translate')
+            m_translation = tf.reshape(m_translation, shape=xs)
+            m_translation *= 1 - mask
+
+            return l_scale, m_translation 
+
+
+BERT-Classification-Tutorial
+def get_activation(activation_string):
+    """Maps a string to a Python function, e.g., "relu" => `tf.nn.relu`.
+
+    Args:
+      activation_string: String name of the activation function.
+
+    Returns:
+      A Python function corresponding to the activation function. If
+      `activation_string` is None, empty, or "linear", this will return None.
+      If `activation_string` is not a string, it will return `activation_string`.
+
+    Raises:
+      ValueError: The `activation_string` does not correspond to a known
+        activation.
+    """
+
+    # We assume that anything that"s not a string is already an activation
+    # function, so we just return it.
+    if not isinstance(activation_string, six.string_types):
+        return activation_string
+
+    if not activation_string:
+        return None
+
+    act = activation_string.lower()
+    if act == "linear":
+        return None
+    elif act == "relu":
+        return tf.nn.relu
+    elif act == "gelu":
+        return gelu
+    elif act == "tanh":
+        return tf.tanh
+    else:
+        raise ValueError("Unsupported activation: %s" % act) 
+
+
+DOTA_models
+def LSTMCell(x, mprev, cprev, key, params):
+  """Create an LSTM cell.
+
+  Implements the equations in pg.2 from
+  "Long Short-Term Memory Based Recurrent Neural Network Architectures
+  For Large Vocabulary Speech Recognition",
+  Hasim Sak, Andrew Senior, Francoise Beaufays.
+
+  Args:
+    w: A dictionary of the weights and optional biases as returned
+      by LSTMParametersSplit().
+    x: Inputs to this cell.
+    mprev: m_{t-1}, the recurrent activations (same as the output)
+      from the previous cell.
+    cprev: c_{t-1}, the cell activations from the previous cell.
+    keep_prob: Keep probability on the input and the outputs of a cell.
+
+  Returns:
+    m: Outputs of this cell.
+    c: Cell Activations.
+    """
+
+  i = tf.matmul(x, params[key + "_ix"]) + tf.matmul(mprev, params[key + "_im"])
+  i = tf.nn.bias_add(i, params[key + "_i"])
+  f = tf.matmul(x, params[key + "_fx"]) + tf.matmul(mprev, params[key + "_fm"])
+  f = tf.nn.bias_add(f, params[key + "_f"])
+  c = tf.matmul(x, params[key + "_cx"]) + tf.matmul(mprev, params[key + "_cm"])
+  c = tf.nn.bias_add(c, params[key + "_c"])
+  o = tf.matmul(x, params[key + "_ox"]) + tf.matmul(mprev, params[key + "_om"])
+  o = tf.nn.bias_add(o, params[key + "_o"])
+  i = tf.sigmoid(i, name="i_gate")
+  f = tf.sigmoid(f, name="f_gate")
+  o = tf.sigmoid(o, name="o_gate")
+  c = f * cprev + i * tf.tanh(c)
+  m = o * c
+  return m, c 
+
+
+DOTA_models
+def history_recurrent_step(self, curr_hprev, hprev):
+    #A single RNN step for controller or history RNN
+    return tf.tanh(
+        tf.matmul(
+            tf.concat(axis=1, values=[hprev, curr_hprev]), self.params[
+                "history_recurrent"])) + self.params["history_recurrent_bias"] 
+
+
+DOTA_models
+def attention(self, last_layer, attention_tensor):
+    """Compute the attention term for the network unit."""
+    h_tensor = attention_tensor
+
+    # Compute the attentions.
+    # Using feed-forward net to map the two inputs into the same dimension
+    focus_tensor = tf.nn.tanh(
+        tf.matmul(
+            h_tensor,
+            self._component.get_variable('attention_weights_pm_0'),
+            name='h_x_pm') + self._component.get_variable('attention_bias_0'))
+
+    context_tensor = tf.nn.tanh(
+        tf.matmul(
+            last_layer,
+            self._component.get_variable('attention_weights_hm_0'),
+            name='l_x_hm') + self._component.get_variable('attention_bias_1'))
+    # The tf.multiply in the following expression broadcasts along the 0 dim:
+    z_vec = tf.reduce_sum(tf.multiply(focus_tensor, context_tensor), 1)
+    p_vec = tf.nn.softmax(tf.reshape(z_vec, [1, -1]))
+    # The tf.multiply in the following expression broadcasts along the 1 dim:
+    r_vec = tf.expand_dims(
+        tf.reduce_sum(
+            tf.multiply(
+                h_tensor, tf.reshape(p_vec, [-1, 1]), name='time_together2'),
+            0),
+        0)
+    return tf.matmul(
+        r_vec,
+        self._component.get_variable('attention_weights_pu'),
+        name='time_together3') 
+
+
+DOTA_models
+def tanh_hard(x):
+  """Hard tanh."""
+  return tf.minimum(1.0, tf.maximum(0.0, x)) 
+
+
+DOTA_models
+def conv_gru(inpts, mem, kw, kh, nmaps, rate, cutoff, prefix, do_layer_norm,
+             args_len=None):
+  """Convolutional GRU."""
+  def conv_lin(args, suffix, bias_start):
+    total_args_len = args_len or len(args) * nmaps
+    res = conv_linear(args, kw, kh, total_args_len, nmaps, rate, True,
+                      bias_start, prefix + "/" + suffix)
+    if do_layer_norm:
+      return layer_norm(res, nmaps, prefix + "/" + suffix)
+    else:
+      return res
+  if cutoff == 1.2:
+    reset = sigmoid_cutoff_12(conv_lin(inpts + [mem], "r", 1.0))
+    gate = sigmoid_cutoff_12(conv_lin(inpts + [mem], "g", 1.0))
+  elif cutoff > 10:
+    reset = sigmoid_hard(conv_lin(inpts + [mem], "r", 1.0))
+    gate = sigmoid_hard(conv_lin(inpts + [mem], "g", 1.0))
+  else:
+    reset = sigmoid_cutoff(conv_lin(inpts + [mem], "r", 1.0), cutoff)
+    gate = sigmoid_cutoff(conv_lin(inpts + [mem], "g", 1.0), cutoff)
+  if cutoff > 10:
+    candidate = tanh_hard(conv_lin(inpts + [reset * mem], "c", 0.0))
+  else:
+    # candidate = tanh_cutoff(conv_lin(inpts + [reset * mem], "c", 0.0), cutoff)
+    candidate = tf.tanh(conv_lin(inpts + [reset * mem], "c", 0.0))
+  return gate * mem + (1 - gate) * candidate 
+
+
+DOTA_models
+def __call__(self, inputs, state, scope=None):
+    """Gated recurrent unit (GRU) function.
+
+    Args:
+      inputs: A 2D batch x input_dim tensor of inputs.
+      state: The previous state from the last time step.
+      scope (optional): TF variable scope for defined GRU variables.
+
+    Returns:
+      A tuple (state, state), where state is the newly computed state at time t.
+      It is returned twice to respect an interface that works for LSTMs.
+    """
+
+    x = inputs
+    h = state
+    if inputs is not None:
+      xh = tf.concat(axis=1, values=[x, h])
+    else:
+      xh = h
+
+    with tf.variable_scope(scope or type(self).__name__):  # "GRU"
+      with tf.variable_scope("Gates"):  # Reset gate and update gate.
+        # We start with bias of 1.0 to not reset and not update.
+        r, u = tf.split(axis=1, num_or_size_splits=2, value=linear(xh,
+                                     2 * self._num_units,
+                                     alpha=self._weight_scale,
+                                     name="xh_2_ru",
+                                     collections=self._collections))
+        r, u = tf.sigmoid(r), tf.sigmoid(u + self._forget_bias)
+      with tf.variable_scope("Candidate"):
+        xrh = tf.concat(axis=1, values=[x, r * h])
+        c = tf.tanh(linear(xrh, self._num_units, name="xrh_2_c",
+                           collections=self._collections))
+      new_h = u * h + (1 - u) * c
+      new_h = tf.clip_by_value(new_h, -self._clip_value, self._clip_value)
+
+    return new_h, new_h 
+
+
+DOTA_models
+def __init__(self, code_depth, name=None):
+    super(BrnnPredictor, self).__init__(name)
+
+    with self._BlockScope():
+      hidden_depth = 2 * code_depth
+
+      # What is coming from the previous layer/iteration
+      # is going through a regular Conv2D layer as opposed to the binary codes
+      # of the current layer/iteration which are going through a masked
+      # convolution.
+      self._adaptation0 = blocks.RasterScanConv2D(
+          hidden_depth, [7, 7], [1, 1], 'SAME',
+          strict_order=True,
+          bias=blocks.Bias(0), act=tf.tanh)
+      self._adaptation1 = blocks.Conv2D(
+          hidden_depth, [3, 3], [1, 1], 'SAME',
+          bias=blocks.Bias(0), act=tf.tanh)
+      self._predictor = blocks.CompositionOperator([
+          blocks.LineOperator(
+              blocks.RasterScanConv2DLSTM(
+                  depth=hidden_depth,
+                  filter_size=[1, 3],
+                  hidden_filter_size=[1, 3],
+                  strides=[1, 1],
+                  padding='SAME')),
+          blocks.Conv2D(hidden_depth, [1, 1], [1, 1], 'SAME',
+                        bias=blocks.Bias(0), act=tf.tanh),
+          blocks.Conv2D(code_depth, [1, 1], [1, 1], 'SAME',
+                        bias=blocks.Bias(0), act=tf.tanh)
+      ]) 
+
+
+DOTA_models
+def testNNMultipleInputs(self):
+    nn = blocks_std.NN(10, bias=blocks_std.Bias(0), act=tf.tanh)
+    x = [tf.placeholder(dtype=tf.float32, shape=[5, 7]),
+         tf.placeholder(dtype=tf.float32, shape=[5, 3]),
+         tf.placeholder(dtype=tf.float32, shape=[5, 5])]
+    y = nn(*x)
+    xs = self.CheckNN(y, nn, 'Tanh')
+    self.assertEqual(len(x), len(xs))
+    for u, v in zip(x, xs):
+      self.assertIs(u, v) 
+
+
+SSGAN-Tensorflow
+def __call__(self, input):
+        if self._deconv_type == 'bilinear':
+            from ops import bilinear_deconv2d as deconv2d
+        elif self._deconv_type == 'nn':
+            from ops import nn_deconv2d as deconv2d
+        elif self._deconv_type == 'transpose':
+            from ops import deconv2d
+        else:
+            raise NotImplementedError
+        with tf.variable_scope(self.name, reuse=self._reuse):
+            if not self._reuse:
+                print('\033[93m'+self.name+'\033[0m')
+            _ = tf.reshape(input, [input.get_shape().as_list()[0], 1, 1, -1])
+            _ = fc(_, 1024, self._is_train, info=not self._reuse, norm='None', name='fc')
+            for i in range(int(np.ceil(np.log2(max(self._h, self._w))))):
+                _ = deconv2d(_, max(self._c, int(_.get_shape().as_list()[-1]/2)), 
+                             self._is_train, info=not self._reuse, norm=self._norm_type,
+                             name='deconv{}'.format(i+1))
+            _ = deconv2d(_, self._c, self._is_train, k=1, s=1, info=not self._reuse,
+                         activation_fn=tf.tanh, norm='None',
+                         name='deconv{}'.format(i+2))
+            _ = tf.image.resize_bilinear(_, [self._h, self._w])
+
+            self._reuse = True
+            self.var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, self.name)
+            return _ 
+
+
+cs294-112_hws
+def _squash_correction(self, raw_actions, stable=True, eps=1e-8):
+        ### Problem 2.B
+        ### YOUR CODE HERE
+        if not stable:
+            return tf.reduce_sum(tf.log(1. - tf.square(tf.tanh(raw_actions)) + eps), axis=1)
+        else:
+            return tf.reduce_sum(tf.log(4.) + 2. * (raw_actions - tf.nn.softplus(2. * raw_actions)), axis=1) 
+
+
+nlimb
+def lstm(xs, ms, s, scope, nh, init_scale=1.0):
+    nbatch, nin = [v.value for v in xs[0].get_shape()]
+    nsteps = len(xs)
+    with tf.variable_scope(scope):
+        wx = tf.get_variable("wx", [nin, nh*4], initializer=ortho_init(init_scale))
+        wh = tf.get_variable("wh", [nh, nh*4], initializer=ortho_init(init_scale))
+        b = tf.get_variable("b", [nh*4], initializer=tf.constant_initializer(0.0))
+
+    c, h = tf.split(axis=1, num_or_size_splits=2, value=s)
+    for idx, (x, m) in enumerate(zip(xs, ms)):
+        c = c*(1-m)
+        h = h*(1-m)
+        z = tf.matmul(x, wx) + tf.matmul(h, wh) + b
+        i, f, o, u = tf.split(axis=1, num_or_size_splits=4, value=z)
+        i = tf.nn.sigmoid(i)
+        f = tf.nn.sigmoid(f)
+        o = tf.nn.sigmoid(o)
+        u = tf.tanh(u)
+        c = f*c + i*u
+        h = o*tf.tanh(c)
+        xs[idx] = h
+    s = tf.concat(axis=1, values=[c, h])
+    return xs, s
+
+
+# ================================================================
+# Theano-like Function
+# ================================================================ 
+
+
+fine-lm
+def feed_forward_gaussian_fun(action_space, config, observations):
+  """Feed-forward Gaussian."""
+  if not isinstance(action_space, gym.spaces.box.Box):
+    raise ValueError("Expecting continuous action space.")
+
+  mean_weights_initializer = tf.contrib.layers.variance_scaling_initializer(
+      factor=config.init_mean_factor)
+  logstd_initializer = tf.random_normal_initializer(config.init_logstd, 1e-10)
+
+  flat_observations = tf.reshape(observations, [
+      tf.shape(observations)[0], tf.shape(observations)[1],
+      functools.reduce(operator.mul, observations.shape.as_list()[2:], 1)])
+
+  with tf.variable_scope("network_parameters"):
+    with tf.variable_scope("policy"):
+      x = flat_observations
+      for size in config.policy_layers:
+        x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+      mean = tf.contrib.layers.fully_connected(
+          x, action_space.shape[0], tf.tanh,
+          weights_initializer=mean_weights_initializer)
+      logstd = tf.get_variable(
+          "logstd", mean.shape[2:], tf.float32, logstd_initializer)
+      logstd = tf.tile(
+          logstd[None, None],
+          [tf.shape(mean)[0], tf.shape(mean)[1]] + [1] * (mean.shape.ndims - 2))
+    with tf.variable_scope("value"):
+      x = flat_observations
+      for size in config.value_layers:
+        x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+      value = tf.contrib.layers.fully_connected(x, 1, None)[..., 0]
+  mean = tf.check_numerics(mean, "mean")
+  logstd = tf.check_numerics(logstd, "logstd")
+  value = tf.check_numerics(value, "value")
+
+  policy = tf.contrib.distributions.MultivariateNormalDiag(mean,
+                                                           tf.exp(logstd))
+
+  return NetworkOutput(policy, value, lambda a: tf.clip_by_value(a, -2., 2)) 
+
+
+fine-lm
+def bottleneck(self, x):
+    with tf.variable_scope("bottleneck"):
+      hparams = self.hparams
+      x = tf.layers.dense(x, hparams.bottleneck_bits, name="bottleneck")
+      if hparams.mode == tf.estimator.ModeKeys.TRAIN:
+        noise = 2.0 * tf.random_uniform(common_layers.shape_list(x)) - 1.0
+        return tf.tanh(x) + noise * hparams.bottleneck_noise, 0.0
+      return tf.tanh(x), 0.0 
+
+
+fine-lm
+def sample(self, features=None, shape=None):
+    del features, shape
+    hp = self.hparams
+    div_x = 2**hp.num_hidden_layers
+    div_y = 1 if self.is1d else 2**hp.num_hidden_layers
+    size = [
+        hp.batch_size, hp.sample_height // div_x, hp.sample_width // div_y,
+        hp.bottleneck_bits
+    ]
+    # Sample in [-1, 1] as the bottleneck is under tanh.
+    return 2.0 * tf.random_uniform(size) - 1.0 
+
+
+fine-lm
+def bottleneck(self, x):
+    hparams = self.hparams
+    x = tf.tanh(tf.layers.dense(x, hparams.bottleneck_bits, name="bottleneck"))
+    d = x + tf.stop_gradient(2.0 * tf.to_float(tf.less(0.0, x)) - 1.0 - x)
+    if hparams.mode == tf.estimator.ModeKeys.TRAIN:
+      noise = tf.random_uniform(common_layers.shape_list(x))
+      noise = 2.0 * tf.to_float(tf.less(hparams.bottleneck_noise, noise)) - 1.0
+      d *= noise
+    x = common_layers.mix(d, x, hparams.discretize_warmup_steps,
+                          hparams.mode == tf.estimator.ModeKeys.TRAIN)
+    return x, 0.0 
+
+
+fine-lm
+def unstack(self, b, size, bottleneck_bits, name):
+    with tf.variable_scope(name + "_unstack"):
+      unb = self.unbottleneck(b, size)
+      dec = self.decoder(unb)
+      pred = tf.layers.dense(dec, bottleneck_bits, name="pred")
+      pred_shape = common_layers.shape_list(pred)
+      pred1 = tf.reshape(pred, pred_shape[:-1] + [-1, 2])
+      x, y = tf.split(pred1, 2, axis=-1)
+      x = tf.squeeze(x, axis=[-1])
+      y = tf.squeeze(y, axis=[-1])
+      gt = 2.0 * tf.to_float(tf.less(x, y)) - 1.0
+      gtc = tf.tanh(y - x)
+      gt += gtc - tf.stop_gradient(gtc)
+      return gt, pred1 
+
+
+fine-lm
+def discriminator(x, compress, hparams, name, reuse=None):
+  with tf.variable_scope(name, reuse=reuse):
+    x = tf.stop_gradient(2 * x) - x  # Reverse gradient.
+    if compress:
+      x = transformer_vae.compress(x, None, False, hparams, "compress")
+    else:
+      x = transformer_vae.residual_conv(x, 1, 3, hparams, "compress_rc")
+    y = tf.reduce_mean(x, axis=1)
+    return tf.tanh(tf.layers.dense(y, 1, name="reduce")) 
+
+
+fine-lm
+def conv_gru(x,
+             kernel_size,
+             filters,
+             padding="SAME",
+             dilation_rate=(1, 1),
+             name=None,
+             reuse=None):
+  """Convolutional GRU in 1 dimension."""
+
+  # Let's make a shorthand for conv call first.
+  def do_conv(args, name, bias_start, padding):
+    return conv(
+        args,
+        filters,
+        kernel_size,
+        padding=padding,
+        dilation_rate=dilation_rate,
+        bias_initializer=tf.constant_initializer(bias_start),
+        name=name)
+
+  # Here comes the GRU gate.
+  with tf.variable_scope(
+      name, default_name="conv_gru", values=[x], reuse=reuse):
+    reset = saturating_sigmoid(do_conv(x, "reset", 1.0, padding))
+    gate = saturating_sigmoid(do_conv(x, "gate", 1.0, padding))
+    candidate = tf.tanh(do_conv(reset * x, "candidate", 0.0, padding))
+    return gate * x + (1 - gate) * candidate 
+
+
+fine-lm
+def gru_feedfwd(a_t, h_prev, filters, name=None):
+  """position-wise Feed-fwd GRU gates following the MPNN.
+
+  Args:
+    a_t: Tensor of shape [batch, length, depth] of current input
+    h_prev: Tensor of shape [batch, length, depth] of prev input
+    filters: an integer specifying number of dimensions of the filters
+    name: A string
+  Returns:
+    h_t: [batch, length, filters] hidden state
+  """
+
+  with tf.variable_scope(name, default_name="GRU", values=[a_t, h_prev]):
+    # we use right matrix multiplication to handle batches
+    # W_z and W_r have shape 2d, d. U_z U_r have shape d,d
+    z_t = (
+        tf.sigmoid(
+            tpu_conv1d(a_t, filters, 1, padding="SAME", name="W_z") +
+            tpu_conv1d(h_prev, filters, 1, padding="SAME", name="U_z")))
+    r_t = (
+        tf.sigmoid(
+            tpu_conv1d(a_t, filters, 1, padding="SAME", name="W_r") +
+            tpu_conv1d(h_prev, filters, 1, padding="SAME", name="U_r")))
+    h_tilde = (
+        tf.tanh(
+            tpu_conv1d(a_t, filters, 1, padding="SAME", name="W") +
+            tpu_conv1d(r_t * h_prev, filters, 1, padding="SAME", name="U")))
+    h_t = (1. - z_t) * h_prev + z_t * h_tilde
+
+  return h_t 
+
+
+fine-lm
+def split_to_discretized_mix_logistic_params(inputs):
+  """Splits input tensor into parameters of discretized mixture logistic.
+
+  Args:
+    inputs: A [batch, height, width, num_mixtures*10] tensor of floats
+      comprising one unconstrained mixture probability, three means
+      (one per channel), three standard deviations (one per channel),
+      and three coefficients which linearly parameterize dependence across
+      channels.
+
+  Returns:
+    Tuple of unconstrained mixture probabilities, locations, scales, and
+    coefficient parameters of the distribution. The mixture probability has
+    shape [batch, height, width, num_mixtures]. Other parameters have shape
+    [batch, height, width, num_mixtures, 3].
+  """
+  batch, height, width, output_dim = shape_list(inputs)
+  num_mixtures = output_dim // 10
+  logits, locs, log_scales, coeffs = tf.split(
+      inputs,
+      num_or_size_splits=[
+          num_mixtures, num_mixtures * 3, num_mixtures * 3, num_mixtures * 3
+      ],
+      axis=-1)
+  split_shape = [batch, height, width, num_mixtures, 3]
+  locs = tf.reshape(locs, split_shape)
+  log_scales = tf.reshape(log_scales, split_shape)
+  log_scales = tf.maximum(log_scales, -7.)
+  coeffs = tf.reshape(coeffs, split_shape)
+  coeffs = tf.tanh(coeffs)
+  return logits, locs, log_scales, coeffs 
+
+
+fine-lm
+def ravanbakhsh_set_layer(layer_size,
+                          inputs,
+                          mask=None,
+                          sequential=False,
+                          activation_fn=tf.nn.tanh,
+                          dropout=0.0,
+                          name=None):
+  """Layer from Deep Sets paper: https://arxiv.org/abs/1611.04500 .
+
+  More parameter-efficient version of a linear-set-layer with context.
+
+  Args:
+    layer_size: Dimension to transform the input vectors to.
+    inputs: A tensor of shape [batch_size, sequence_length, vector]
+      containing the sequences of input vectors.
+    mask: A tensor of shape [batch_size, sequence_length] containing a
+      mask for the inputs with 1's for existing elements, and 0's elsewhere.
+    sequential: If true, will use a running global pool so each element will
+      only depend on those before it. Set true if this layer is being used in
+      an output sequence.
+    activation_fn: The activation function to use.
+    dropout: dropout.
+    name: name.
+
+  Returns:
+    Tensor of shape [batch_size, sequence_length, vector] containing the
+    sequences of transformed vectors.
+  """
+  del dropout
+  with tf.variable_scope(name, "ravanbakhsh_set_layer", [inputs]):
+    if sequential:
+      return linear_set_layer(
+          layer_size,
+          inputs - running_global_pool_1d(inputs),
+          activation_fn=activation_fn,
+          name=name)
+    return linear_set_layer(
+        layer_size,
+        inputs - tf.expand_dims(global_pool_1d(inputs, mask=mask), axis=1),
+        activation_fn=activation_fn,
+        name=name) 
+
+
+fine-lm
+def tanh_discrete_bottleneck(x, bottleneck_bits, bottleneck_noise,
+                             discretize_warmup_steps, mode):
+  """Simple discretization through tanh, flip bottleneck_noise many bits."""
+  x = tf.tanh(tf.layers.dense(x, bottleneck_bits,
+                              name="tanh_discrete_bottleneck"))
+  d = x + tf.stop_gradient(2.0 * tf.to_float(tf.less(0.0, x)) - 1.0 - x)
+  if mode == tf.estimator.ModeKeys.TRAIN:
+    noise = tf.random_uniform(common_layers.shape_list(x))
+    noise = 2.0 * tf.to_float(tf.less(bottleneck_noise, noise)) - 1.0
+    d *= noise
+  d = common_layers.mix(d, x, discretize_warmup_steps,
+                        mode == tf.estimator.ModeKeys.TRAIN)
+  return d, 0.0 
+
+
+fine-lm
+def tanh_discrete_unbottleneck(x, hidden_size):
+  """Simple un-discretization from tanh."""
+  x = tf.layers.dense(x, hidden_size, name="tanh_discrete_unbottleneck")
+  return x 
+
+
+lirpg
+def __init__(self, sess, ob_space, ac_space, nbatch, nsteps, reuse=False): #pylint: disable=W0613
+        ob_shape = (nbatch,) + ob_space.shape
+        actdim = ac_space.shape[0]
+        X = tf.placeholder(tf.float32, ob_shape, name='Ob') #obs
+        with tf.variable_scope("model", reuse=reuse):
+            activ = tf.tanh
+            h1 = activ(fc(X, 'pi_fc1', nh=64, init_scale=np.sqrt(2)))
+            h2 = activ(fc(h1, 'pi_fc2', nh=64, init_scale=np.sqrt(2)))
+            pi = fc(h2, 'pi', actdim, init_scale=0.01)
+            h1 = activ(fc(X, 'vf_fc1', nh=64, init_scale=np.sqrt(2)))
+            h2 = activ(fc(h1, 'vf_fc2', nh=64, init_scale=np.sqrt(2)))
+            vf = fc(h2, 'vf', 1)[:,0]
+            logstd = tf.get_variable(name="logstd", shape=[1, actdim],
+                initializer=tf.zeros_initializer())
+
+        pdparam = tf.concat([pi, pi * 0.0 + logstd], axis=1)
+
+        self.pdtype = make_pdtype(ac_space)
+        self.pd = self.pdtype.pdfromflat(pdparam)
+
+        a0 = self.pd.sample()
+        neglogp0 = self.pd.neglogp(a0)
+        self.initial_state = None
+
+        def step(ob, *_args, **_kwargs):
+            a, v, neglogp = sess.run([a0, vf, neglogp0], {X:ob})
+            return a, v, self.initial_state, neglogp
+
+        def value(ob, *_args, **_kwargs):
+            return sess.run(vf, {X:ob})
+
+        self.X = X
+        self.pi = pi
+        self.vf = vf
+        self.step = step
+        self.value = value
+
+
+########################################################################################################################
+# Intrinsic Reward Augmented Policies
+######################################################################################################################## 
+
+
+lirpg
+def lnlstm(xs, ms, s, scope, nh, init_scale=1.0):
+    nbatch, nin = [v.value for v in xs[0].get_shape()]
+    nsteps = len(xs)
+    with tf.variable_scope(scope):
+        wx = tf.get_variable("wx", [nin, nh*4], initializer=ortho_init(init_scale))
+        gx = tf.get_variable("gx", [nh*4], initializer=tf.constant_initializer(1.0))
+        bx = tf.get_variable("bx", [nh*4], initializer=tf.constant_initializer(0.0))
+
+        wh = tf.get_variable("wh", [nh, nh*4], initializer=ortho_init(init_scale))
+        gh = tf.get_variable("gh", [nh*4], initializer=tf.constant_initializer(1.0))
+        bh = tf.get_variable("bh", [nh*4], initializer=tf.constant_initializer(0.0))
+
+        b = tf.get_variable("b", [nh*4], initializer=tf.constant_initializer(0.0))
+
+        gc = tf.get_variable("gc", [nh], initializer=tf.constant_initializer(1.0))
+        bc = tf.get_variable("bc", [nh], initializer=tf.constant_initializer(0.0))
+
+    c, h = tf.split(axis=1, num_or_size_splits=2, value=s)
+    for idx, (x, m) in enumerate(zip(xs, ms)):
+        c = c*(1-m)
+        h = h*(1-m)
+        z = _ln(tf.matmul(x, wx), gx, bx) + _ln(tf.matmul(h, wh), gh, bh) + b
+        i, f, o, u = tf.split(axis=1, num_or_size_splits=4, value=z)
+        i = tf.nn.sigmoid(i)
+        f = tf.nn.sigmoid(f)
+        o = tf.nn.sigmoid(o)
+        u = tf.tanh(u)
+        c = f*c + i*u
+        h = o*tf.tanh(_ln(c, gc, bc))
+        xs[idx] = h
+    s = tf.concat(axis=1, values=[c, h])
+    return xs, s 
+
+
+lirpg
+def __init__(self, sess, ob_space, ac_space, nbatch, nsteps, reuse=False): #pylint: disable=W0613
+        ob_shape = (nbatch,) + ob_space.shape
+        actdim = ac_space.shape[0]
+        X = tf.placeholder(tf.float32, ob_shape, name='Ob') #obs
+        with tf.variable_scope("model", reuse=reuse):
+            activ = tf.tanh
+            h1 = activ(fc(X, 'pi_fc1', nh=64, init_scale=np.sqrt(2)))
+            h2 = activ(fc(h1, 'pi_fc2', nh=64, init_scale=np.sqrt(2)))
+            pi = fc(h2, 'pi', actdim, init_scale=0.01)
+            h1 = activ(fc(X, 'vf_fc1', nh=64, init_scale=np.sqrt(2)))
+            h2 = activ(fc(h1, 'vf_fc2', nh=64, init_scale=np.sqrt(2)))
+            vf = fc(h2, 'vf', 1)[:,0]
+            logstd = tf.get_variable(name="logstd", shape=[1, actdim],
+                initializer=tf.zeros_initializer())
+
+        pdparam = tf.concat([pi, pi * 0.0 + logstd], axis=1)
+
+        self.pdtype = make_pdtype(ac_space)
+        self.pd = self.pdtype.pdfromflat(pdparam)
+
+        a0 = self.pd.sample()
+        neglogp0 = self.pd.neglogp(a0)
+        self.initial_state = None
+
+        def step(ob, *_args, **_kwargs):
+            a, v, neglogp = sess.run([a0, vf, neglogp0], {X:ob})
+            return a, v, self.initial_state, neglogp
+
+        def value(ob, *_args, **_kwargs):
+            return sess.run(vf, {X:ob})
+
+        self.X = X
+        self.pi = pi
+        self.vf = vf
+        self.step = step
+        self.value = value
+
+
+########################################################################################################################
+# Intrinsic Reward Augmented Policies
+######################################################################################################################## 
+
+
+lirpg
+def __init__(self, inputs_tf, dimo, dimg, dimu, max_u, o_stats, g_stats, hidden, layers,
+                 **kwargs):
+        """The actor-critic network and related training code.
+
+        Args:
+            inputs_tf (dict of tensors): all necessary inputs for the network: the
+                observation (o), the goal (g), and the action (u)
+            dimo (int): the dimension of the observations
+            dimg (int): the dimension of the goals
+            dimu (int): the dimension of the actions
+            max_u (float): the maximum magnitude of actions; action outputs will be scaled
+                accordingly
+            o_stats (baselines.her.Normalizer): normalizer for observations
+            g_stats (baselines.her.Normalizer): normalizer for goals
+            hidden (int): number of hidden units that should be used in hidden layers
+            layers (int): number of hidden layers
+        """
+        self.o_tf = inputs_tf['o']
+        self.g_tf = inputs_tf['g']
+        self.u_tf = inputs_tf['u']
+
+        # Prepare inputs for actor and critic.
+        o = self.o_stats.normalize(self.o_tf)
+        g = self.g_stats.normalize(self.g_tf)
+        input_pi = tf.concat(axis=1, values=[o, g])  # for actor
+
+        # Networks.
+        with tf.variable_scope('pi'):
+            self.pi_tf = self.max_u * tf.tanh(nn(
+                input_pi, [self.hidden] * self.layers + [self.dimu]))
+        with tf.variable_scope('Q'):
+            # for policy training
+            input_Q = tf.concat(axis=1, values=[o, g, self.pi_tf / self.max_u])
+            self.Q_pi_tf = nn(input_Q, [self.hidden] * self.layers + [1])
+            # for critic training
+            input_Q = tf.concat(axis=1, values=[o, g, self.u_tf / self.max_u])
+            self._input_Q = input_Q  # exposed for tests
+            self.Q_tf = nn(input_Q, [self.hidden] * self.layers + [1], reuse=True) 
+
+
+bert-co-matching
+def gelu(x):
+  """Gaussian Error Linear Unit.
+
+  This is a smoother version of the RELU.
+  Original paper: https://arxiv.org/abs/1606.08415
+  Args:
+    x: float Tensor to perform activation.
+
+  Returns:
+    `x` with the GELU activation applied.
+  """
+  cdf = 0.5 * (1.0 + tf.tanh(
+      (np.sqrt(2 / np.pi) * (x + 0.044715 * tf.pow(x, 3)))))
+  return x * cdf 
+
+
+bert-co-matching
+def get_activation(activation_string):
+  """Maps a string to a Python function, e.g., "relu" => `tf.nn.relu`.
+
+  Args:
+    activation_string: String name of the activation function.
+
+  Returns:
+    A Python function corresponding to the activation function. If
+    `activation_string` is None, empty, or "linear", this will return None.
+    If `activation_string` is not a string, it will return `activation_string`.
+
+  Raises:
+    ValueError: The `activation_string` does not correspond to a known
+      activation.
+  """
+
+  # We assume that anything that"s not a string is already an activation
+  # function, so we just return it.
+  if not isinstance(activation_string, six.string_types):
+    return activation_string
+
+  if not activation_string:
+    return None
+
+  act = activation_string.lower()
+  if act == "linear":
+    return None
+  elif act == "relu":
+    return tf.nn.relu
+  elif act == "gelu":
+    return gelu
+  elif act == "tanh":
+    return tf.tanh
+  else:
+    raise ValueError("Unsupported activation: %s" % act) 
+
+
+bert-sts
+def gelu(x):
+  """Gaussian Error Linear Unit.
+
+  This is a smoother version of the RELU.
+  Original paper: https://arxiv.org/abs/1606.08415
+  Args:
+    x: float Tensor to perform activation.
+
+  Returns:
+    `x` with the GELU activation applied.
+  """
+  cdf = 0.5 * (1.0 + tf.tanh(
+      (np.sqrt(2 / np.pi) * (x + 0.044715 * tf.pow(x, 3)))))
+  return x * cdf 
+
+
+bert-sts
+def get_activation(activation_string):
+  """Maps a string to a Python function, e.g., "relu" => `tf.nn.relu`.
+
+  Args:
+    activation_string: String name of the activation function.
+
+  Returns:
+    A Python function corresponding to the activation function. If
+    `activation_string` is None, empty, or "linear", this will return None.
+    If `activation_string` is not a string, it will return `activation_string`.
+
+  Raises:
+    ValueError: The `activation_string` does not correspond to a known
+      activation.
+  """
+
+  # We assume that anything that"s not a string is already an activation
+  # function, so we just return it.
+  if not isinstance(activation_string, six.string_types):
+    return activation_string
+
+  if not activation_string:
+    return None
+
+  act = activation_string.lower()
+  if act == "linear":
+    return None
+  elif act == "relu":
+    return tf.nn.relu
+  elif act == "gelu":
+    return gelu
+  elif act == "tanh":
+    return tf.tanh
+  else:
+    raise ValueError("Unsupported activation: %s" % act) 
+
+
+UROP-Adversarial-Feature-Matching-for-Text-Generation
+def cp(self, input_sents, i=0):
+		# conv and pool
+		# https://github.com/hunkim/DeepLearningZeroToAll/blob/master/lab-11-2-mnist_deep_cnn.py
+		with tf.variable_scope('d', reuse=True):
+			c = tf.nn.conv2d(input_sents, tf.get_variable(self.name + '_W' + str(i)),
+										  strides=[1, 1, 1, 1], padding='VALID')
+			c = tf.nn.tanh(c)
+			tmp = input_sents.get_shape().as_list()[1] - self.window[i] + 1
+			c = tf.nn.max_pool(c, ksize=[1, tmp, 1, 1],
+								  strides=[1, 1, 1, 1],
+								  padding='VALID')
+			c = tf.nn.dropout(c, keep_prob=self.keep_prob)
+			return tf.reshape(c, [-1, self.input_dim]) 
+
+
+UROP-Adversarial-Feature-Matching-for-Text-Generation
+def lstm(self, prev_y, prev_h, prev_c, z):
+		hs = self.hidden_size
+
+		preact = tf.einsum('ijk,ka->ija', prev_h, self.h2h_W) + \
+				 tf.einsum('ijk,ka->ija', prev_y, self.i2h_W) + \
+				 tf.matmul(z, self.z2h_W) + \
+				 self.b # preactivation
+		# [1, batch_size, hidden_size * 4]
+		i = tf.sigmoid(preact[:, :, 0*hs: 1*hs])
+		f = tf.sigmoid(preact[:, :, 1*hs: 2*hs])
+		o = tf.sigmoid(preact[:, :, 2*hs: 3*hs])
+		c = tf.tanh(preact[:, :, 3*hs: 4*hs])
+		c = f * prev_c + i * c # [1, batch_size, hidden_size] (element-wise multiply)
+		h = o * tf.tanh(c) # [1, batch_size, hidden_size]
+		y = tf.einsum('ijk,ka->ija', h, self.Vhid) + self.bhid # [1, batch_size, vocab_size]
+
+		# Author doesn't mention this part in his paper, but it appers in his code
+		# So I assume this is part of his soft-max approx. strategy ---|
+		max_y = tf.reduce_max(y, axis=1, keep_dims=True) # [1, 1, vocab_size]
+		e = tf.exp((y - max_y) * self.L)  # [1, batch_size, vocab_size]
+		w = e / tf.reduce_sum(e, axis=1, keep_dims=True) # [1, batch_size, vocab_size]
+		# Assumption ends here ----------------------------------------|
+
+		y = tf.einsum('ijk,ka->ija', w, self.Wemb) # [1, batch_size, input_dim]
+		
+		return y, h, c 
+
+
+HardRLWithYoutube
+def lnlstm(xs, ms, s, scope, nh, init_scale=1.0):
+    nbatch, nin = [v.value for v in xs[0].get_shape()]
+    with tf.variable_scope(scope):
+        wx = tf.get_variable("wx", [nin, nh*4], initializer=ortho_init(init_scale))
+        gx = tf.get_variable("gx", [nh*4], initializer=tf.constant_initializer(1.0))
+        bx = tf.get_variable("bx", [nh*4], initializer=tf.constant_initializer(0.0))
+
+        wh = tf.get_variable("wh", [nh, nh*4], initializer=ortho_init(init_scale))
+        gh = tf.get_variable("gh", [nh*4], initializer=tf.constant_initializer(1.0))
+        bh = tf.get_variable("bh", [nh*4], initializer=tf.constant_initializer(0.0))
+
+        b = tf.get_variable("b", [nh*4], initializer=tf.constant_initializer(0.0))
+
+        gc = tf.get_variable("gc", [nh], initializer=tf.constant_initializer(1.0))
+        bc = tf.get_variable("bc", [nh], initializer=tf.constant_initializer(0.0))
+
+    c, h = tf.split(axis=1, num_or_size_splits=2, value=s)
+    for idx, (x, m) in enumerate(zip(xs, ms)):
+        c = c*(1-m)
+        h = h*(1-m)
+        z = _ln(tf.matmul(x, wx), gx, bx) + _ln(tf.matmul(h, wh), gh, bh) + b
+        i, f, o, u = tf.split(axis=1, num_or_size_splits=4, value=z)
+        i = tf.nn.sigmoid(i)
+        f = tf.nn.sigmoid(f)
+        o = tf.nn.sigmoid(o)
+        u = tf.tanh(u)
+        c = f*c + i*u
+        h = o*tf.tanh(_ln(c, gc, bc))
+        xs[idx] = h
+    s = tf.concat(axis=1, values=[c, h])
+    return xs, s 
+
+
+HardRLWithYoutube
+def __init__(self, inputs_tf, dimo, dimg, dimu, max_u, o_stats, g_stats, hidden, layers,
+                 **kwargs):
+        """The actor-critic network and related training code.
+
+        Args:
+            inputs_tf (dict of tensors): all necessary inputs for the network: the
+                observation (o), the goal (g), and the action (u)
+            dimo (int): the dimension of the observations
+            dimg (int): the dimension of the goals
+            dimu (int): the dimension of the actions
+            max_u (float): the maximum magnitude of actions; action outputs will be scaled
+                accordingly
+            o_stats (baselines.her.Normalizer): normalizer for observations
+            g_stats (baselines.her.Normalizer): normalizer for goals
+            hidden (int): number of hidden units that should be used in hidden layers
+            layers (int): number of hidden layers
+        """
+        self.o_tf = inputs_tf['o']
+        self.g_tf = inputs_tf['g']
+        self.u_tf = inputs_tf['u']
+
+        # Prepare inputs for actor and critic.
+        o = self.o_stats.normalize(self.o_tf)
+        g = self.g_stats.normalize(self.g_tf)
+        input_pi = tf.concat(axis=1, values=[o, g])  # for actor
+
+        # Networks.
+        with tf.variable_scope('pi'):
+            self.pi_tf = self.max_u * tf.tanh(nn(
+                input_pi, [self.hidden] * self.layers + [self.dimu]))
+        with tf.variable_scope('Q'):
+            # for policy training
+            input_Q = tf.concat(axis=1, values=[o, g, self.pi_tf / self.max_u])
+            self.Q_pi_tf = nn(input_Q, [self.hidden] * self.layers + [1])
+            # for critic training
+            input_Q = tf.concat(axis=1, values=[o, g, self.u_tf / self.max_u])
+            self._input_Q = input_Q  # exposed for tests
+            self.Q_tf = nn(input_Q, [self.hidden] * self.layers + [1], reuse=True) 
+
+
+tensorflow_RL
+def __init__(self,name,state_size,action_size):
+        self.state_size = state_size
+        self.action_size = action_size
+        self.scope = name
+        with tf.variable_scope(name):
+            self.state = tf.placeholder(dtype=tf.float32, shape=[None, self.state_size])
+            self.l1 = tf.layers.dense(self.state,128,tf.nn.leaky_relu,trainable=True)
+            self.l2 = tf.layers.dense(self.l1, 128, tf.nn.leaky_relu, trainable=True)
+            self.l3 = tf.layers.dense(self.l2, 128, tf.nn.leaky_relu, trainable=True)
+            self.actor = tf.layers.dense(self.l3, self.action_size, tf.tanh, trainable=True) 
+
+
+tudouNLP
+def get_activation(activation_string):
+  """Maps a string to a Python function, e.g., "relu" => `tf.nn.relu`.
+
+  Args:
+    activation_string: String name of the activation function.
+
+  Returns:
+    A Python function corresponding to the activation function. If
+    `activation_string` is None, empty, or "linear", this will return None.
+    If `activation_string` is not a string, it will return `activation_string`.
+
+  Raises:
+    ValueError: The `activation_string` does not correspond to a known
+      activation.
+  """
+
+  # We assume that anything that"s not a string is already an activation
+  # function, so we just return it.
+  if not isinstance(activation_string, six.string_types):
+    return activation_string
+
+  if not activation_string:
+    return None
+
+  act = activation_string.lower()
+  if act == "linear":
+    return None
+  elif act == "relu":
+    return tf.nn.relu
+  elif act == "gelu":
+    return gelu
+  elif act == "tanh":
+    return tf.tanh
+  else:
+    raise ValueError("Unsupported activation: %s" % act) 
+
+
+Chinese-Character-and-Calligraphic-Image-Processing
+def style_training_net(x):
+    pads = tf.constant([[0,0],[40,40],[40,40],[0,0]])
+    x_ = tf.pad(x,pads,"REFLECT")
+    x_ = tf.nn.relu(instance_norm(conv_trainnet(x_,9,3,32,1,'SAME')))
+    x_ = tf.nn.relu(instance_norm(conv_trainnet(x_,3,32,64,2,'SAME')))
+    x_ = tf.nn.relu(instance_norm(conv_trainnet(x_,3,64,128,2,'SAME')))
+    for i in range(5):
+        x_ = residual_block(x_)
+    x_ = tf.nn.relu(instance_norm(deconv(x_,3,128,64,2)))
+    x_ = tf.nn.relu(instance_norm(deconv(x_,3,64,32,2)))
+    x_ = instance_norm(conv_trainnet(x_,9,32,3,1,'SAME'))
+    return (tf.tanh(x_)+1)*127.5 
+
+
+Chinese-Character-and-Calligraphic-Image-Processing
+def style_training_net(x):
+    pads = tf.constant([[0,0],[40,40],[40,40],[0,0]])
+    x_ = tf.pad(x,pads,"REFLECT")
+    x_ = tf.nn.relu(instance_norm(conv_trainnet(x_,9,3,32,1,'SAME')))
+    x_ = tf.nn.relu(instance_norm(conv_trainnet(x_,3,32,64,2,'SAME')))
+    x_ = tf.nn.relu(instance_norm(conv_trainnet(x_,3,64,128,2,'SAME')))
+    for i in range(5):
+        x_ = residual_block(x_)
+    x_ = tf.nn.relu(instance_norm(deconv(x_,3,128,64,2)))
+    x_ = tf.nn.relu(instance_norm(deconv(x_,3,64,32,2)))
+    x_ = instance_norm(conv_trainnet(x_,9,32,3,1,'SAME'))
+    return (tf.tanh(x_)+1)*127.5 
+
+
+CartoonGAN-Tensorflow
+def tanh(x):
+    return tf.tanh(x) 
+
+
+evolution-strategies-starter
+def _initialize(self, ob_space, ac_space, ac_bins, ac_noise_std, nonlin_type, hidden_dims, connection_type):
+        self.ac_space = ac_space
+        self.ac_bins = ac_bins
+        self.ac_noise_std = ac_noise_std
+        self.hidden_dims = hidden_dims
+        self.connection_type = connection_type
+
+        assert len(ob_space.shape) == len(self.ac_space.shape) == 1
+        assert np.all(np.isfinite(self.ac_space.low)) and np.all(np.isfinite(self.ac_space.high)), \
+            'Action bounds required'
+
+        self.nonlin = {'tanh': tf.tanh, 'relu': tf.nn.relu, 'lrelu': U.lrelu, 'elu': tf.nn.elu}[nonlin_type]
+
+        with tf.variable_scope(type(self).__name__) as scope:
+            # Observation normalization
+            ob_mean = tf.get_variable(
+                'ob_mean', ob_space.shape, tf.float32, tf.constant_initializer(np.nan), trainable=False)
+            ob_std = tf.get_variable(
+                'ob_std', ob_space.shape, tf.float32, tf.constant_initializer(np.nan), trainable=False)
+            in_mean = tf.placeholder(tf.float32, ob_space.shape)
+            in_std = tf.placeholder(tf.float32, ob_space.shape)
+            self._set_ob_mean_std = U.function([in_mean, in_std], [], updates=[
+                tf.assign(ob_mean, in_mean),
+                tf.assign(ob_std, in_std),
+            ])
+
+            # Policy network
+            o = tf.placeholder(tf.float32, [None] + list(ob_space.shape))
+            a = self._make_net(tf.clip_by_value((o - ob_mean) / ob_std, -5.0, 5.0))
+            self._act = U.function([o], a)
+        return scope 
+
+
+ConvLab
+def __call__(self, inputs, state, scope=None):
+        state_only = tf.slice(state, [0, self.label_size], [-1, -1])
+        output_only = tf.slice(state, [0, 0], [-1, self.label_size])
+        new_state = tf.tanh(tf.matmul(inputs, self.U_m) + tf.matmul(state_only, self.W_m))
+        output = tf.matmul(inputs, self.U_h) + tf.matmul(output_only, self.W_h) + tf.matmul(state_only, self.M_h)
+        if self.binary_output:
+            output_ = tf.sigmoid(output)
+        else:
+            output_ = tf.nn.softmax(output)
+        state = tf.concat([output_, new_state], 1)
+        return output, state 
+
+
+bruno
+def function_s_t(self, x, mask, name='function_s_t'):
+        if self.weight_norm:
+            return self.function_s_t_wn(x, mask, name + '_wn')
+        else:
+            with tf.variable_scope(name):
+                num_filters = self.num_filters
+                xs = int_shape(x)
+                kernel_size = 3
+                n_input_channels = xs[3]
+
+                y = tf.layers.conv2d(x, num_filters, 1, padding='same', activation=self.nonlinearity,
+                                     kernel_initializer=Orthogonal(), name='c1')
+
+                skip = y
+                # Residual blocks
+                num_residual_blocks = 8
+                for r in range(num_residual_blocks):
+                    y = tf.layers.conv2d(y, num_filters, kernel_size, padding='same', activation=self.nonlinearity,
+                                         kernel_initializer=Orthogonal(), name='c2_%d' % r)
+
+                    y = tf.layers.conv2d(y, num_filters, kernel_size, padding='same', activation=None,
+                                         kernel_initializer=Orthogonal(), name='c3_%d' % r)
+
+                    y += skip
+                    y = self.nonlinearity(y)
+                    skip = y
+
+                l_scale = tf.layers.conv2d(y, n_input_channels, 1, padding='same', activation=tf.tanh,
+                                           kernel_initializer=tf.constant_initializer(0.),
+                                           bias_initializer=tf.constant_initializer(0.),
+                                           name='conv_out_scale')
+
+                l_scale *= 1 - mask
+
+                m_translation = tf.layers.conv2d(y, n_input_channels, 1, padding='same', activation=None,
+                                                 kernel_initializer=tf.constant_initializer(0.),
+                                                 bias_initializer=tf.constant_initializer(0.),
+                                                 name='conv_out_translation')
+                m_translation *= 1 - mask
+
+                return l_scale, m_translation 
+
+
+bruno
+def function_s_t_wn(self, x, mask, name):
+        with tf.variable_scope(name):
+            num_filters = self.num_filters
+            xs = int_shape(x)
+            kernel_size = 3
+            n_input_channels = xs[3]
+
+            y = conv2d_wn(x, num_filters, 'c1', filter_size=[1, 1], nonlinearity=self.nonlinearity)
+
+            skip = y
+            # Residual blocks
+            num_residual_blocks = 8
+            for r in range(num_residual_blocks):
+                y = conv2d_wn(y, num_filters, 'c2_%d' % r, filter_size=[kernel_size, kernel_size],
+                              nonlinearity=self.nonlinearity)
+                y = conv2d_wn(y, num_filters, 'c3_%d' % r, filter_size=[kernel_size, kernel_size], nonlinearity=None)
+
+                y += skip
+                y = self.nonlinearity(y)
+                skip = y
+
+            l_scale = tf.layers.conv2d(y, n_input_channels, 1, padding='same', activation=tf.tanh,
+                                       kernel_initializer=tf.constant_initializer(0.),
+                                       bias_initializer=tf.constant_initializer(0.),
+                                       name='conv_out_scale')
+            l_scale *= 1 - mask
+
+            m_translation = tf.layers.conv2d(y, n_input_channels, 1, padding='same', activation=None,
+                                             kernel_initializer=tf.constant_initializer(0.),
+                                             bias_initializer=tf.constant_initializer(0.),
+                                             name='conv_out_translation')
+            m_translation *= 1 - mask
+
+            return l_scale, m_translation 
+
+
+bruno
+def function_s_t(self, x, mask, name='function_s_t_dense'):
+        if self.weight_norm:
+            return self.function_s_t_wn(x, mask, name + '_wn')
+        else:
+            with tf.variable_scope(name):
+                xs = int_shape(x)
+                y = tf.reshape(x, (xs[0], -1))
+                ndim = int_shape(y)[-1]
+
+                y = tf.layers.dense(y, units=self.n_units, activation=self.nonlinearity,
+                                    kernel_initializer=Orthogonal(),
+                                    bias_initializer=tf.constant_initializer(0.01), name='d1')
+                y = tf.layers.dense(y, units=self.n_units, activation=self.nonlinearity,
+                                    kernel_initializer=Orthogonal(),
+                                    bias_initializer=tf.constant_initializer(0.01), name='d2')
+
+                l_scale = tf.layers.dense(y, units=ndim, activation=tf.tanh,
+                                          kernel_initializer=tf.constant_initializer(0.),
+                                          bias_initializer=tf.constant_initializer(0.), name='d_scale')
+                l_scale = tf.reshape(l_scale, shape=xs)
+                l_scale *= 1 - mask
+
+                m_translation = tf.layers.dense(y, units=ndim, activation=None,
+                                                kernel_initializer=tf.constant_initializer(0.),
+                                                bias_initializer=tf.constant_initializer(0.), name='d_translate')
+                m_translation = tf.reshape(m_translation, shape=xs)
+                m_translation *= 1 - mask
+
+                return l_scale, m_translation 
+
+
+DOTA_models
+def basic_conv_lstm_cell(inputs,
+                         state,
+                         num_channels,
+                         filter_size=5,
+                         forget_bias=1.0,
+                         scope=None,
+                         reuse=None):
+  """Basic LSTM recurrent network cell, with 2D convolution connctions.
+
+  We add forget_bias (default: 1) to the biases of the forget gate in order to
+  reduce the scale of forgetting in the beginning of the training.
+
+  It does not allow cell clipping, a projection layer, and does not
+  use peep-hole connections: it is the basic baseline.
+
+  Args:
+    inputs: input Tensor, 4D, batch x height x width x channels.
+    state: state Tensor, 4D, batch x height x width x channels.
+    num_channels: the number of output channels in the layer.
+    filter_size: the shape of the each convolution filter.
+    forget_bias: the initial value of the forget biases.
+    scope: Optional scope for variable_scope.
+    reuse: whether or not the layer and the variables should be reused.
+
+  Returns:
+     a tuple of tensors representing output and the new state.
+  """
+  spatial_size = inputs.get_shape()[1:3]
+  if state is None:
+    state = init_state(inputs, list(spatial_size) + [2 * num_channels])
+  with tf.variable_scope(scope,
+                         'BasicConvLstmCell',
+                         [inputs, state],
+                         reuse=reuse):
+    inputs.get_shape().assert_has_rank(4)
+    state.get_shape().assert_has_rank(4)
+    c, h = tf.split(axis=3, num_or_size_splits=2, value=state)
+    inputs_h = tf.concat(axis=3, values=[inputs, h])
+    # Parameters of gates are concatenated into one conv for efficiency.
+    i_j_f_o = layers.conv2d(inputs_h,
+                            4 * num_channels, [filter_size, filter_size],
+                            stride=1,
+                            activation_fn=None,
+                            scope='Gates')
+
+    # i = input_gate, j = new_input, f = forget_gate, o = output_gate
+    i, j, f, o = tf.split(axis=3, num_or_size_splits=4, value=i_j_f_o)
+
+    new_c = c * tf.sigmoid(f + forget_bias) + tf.sigmoid(i) * tf.tanh(j)
+    new_h = tf.tanh(new_c) * tf.sigmoid(o)
+
+    return new_h, tf.concat(axis=3, values=[new_c, new_h]) 
+
+
+DOTA_models
+def __call__(self, inputs, state, scope=None):
+    """Gated recurrent unit (GRU) function.
+
+    Args:
+      inputs: A 2D batch x input_dim tensor of inputs.
+      state: The previous state from the last time step.
+      scope (optional): TF variable scope for defined GRU variables.
+
+    Returns:
+      A tuple (state, state), where state is the newly computed state at time t.
+      It is returned twice to respect an interface that works for LSTMs.
+    """
+
+    x = inputs
+    h = state
+    with tf.variable_scope(scope or type(self).__name__):  # "GRU"
+      with tf.variable_scope("Gates"):  # Reset gate and update gate.
+        # We start with bias of 1.0 to not reset and not update.
+        r_x = u_x = 0.0
+        if x is not None:
+          r_x, u_x = tf.split(axis=1, num_or_size_splits=2, value=linear(x,
+                                           2 * self._num_units,
+                                           alpha=self._input_weight_scale,
+                                           do_bias=False,
+                                           name="x_2_ru",
+                                           normalized=False,
+                                           collections=self._input_collections))
+
+        r_h, u_h = tf.split(axis=1, num_or_size_splits=2, value=linear(h,
+                                         2 * self._num_units,
+                                         do_bias=True,
+                                         alpha=self._rec_weight_scale,
+                                         name="h_2_ru",
+                                         collections=self._rec_collections))
+        r = r_x + r_h
+        u = u_x + u_h
+        r, u = tf.sigmoid(r), tf.sigmoid(u + self._forget_bias)
+
+      with tf.variable_scope("Candidate"):
+        c_x = 0.0
+        if x is not None:
+          c_x = linear(x, self._num_units, name="x_2_c", do_bias=False,
+                       alpha=self._input_weight_scale,
+                       normalized=False,
+                       collections=self._input_collections)
+        c_rh = linear(r*h, self._num_units, name="rh_2_c", do_bias=True,
+                     alpha=self._rec_weight_scale,
+                     collections=self._rec_collections)
+        c = tf.tanh(c_x + c_rh)
+
+      new_h = u * h + (1 - u) * c
+      new_h = tf.clip_by_value(new_h, -self._clip_value, self._clip_value)
+
+    return new_h, new_h 
+
+
+soccer-matlab
+def feed_forward_gaussian(
+    config, action_size, observations, unused_length, state=None):
+  """Independent feed forward networks for policy and value.
+
+  The policy network outputs the mean action and the log standard deviation
+  is learned as independent parameter vector.
+
+  Args:
+    config: Configuration object.
+    action_size: Length of the action vector.
+    observations: Sequences of observations.
+    unused_length: Batch of sequence lengths.
+    state: Batch of initial recurrent states.
+
+  Returns:
+    NetworkOutput tuple.
+  """
+  mean_weights_initializer = tf.contrib.layers.variance_scaling_initializer(
+      factor=config.init_mean_factor)
+  logstd_initializer = tf.random_normal_initializer(config.init_logstd, 1e-10)
+  flat_observations = tf.reshape(observations, [
+      tf.shape(observations)[0], tf.shape(observations)[1],
+      functools.reduce(operator.mul, observations.shape.as_list()[2:], 1)])
+  with tf.variable_scope('policy'):
+    x = flat_observations
+    for size in config.policy_layers:
+      x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+    mean = tf.contrib.layers.fully_connected(
+        x, action_size, tf.tanh,
+        weights_initializer=mean_weights_initializer)
+    logstd = tf.get_variable(
+        'logstd', mean.shape[2:], tf.float32, logstd_initializer)
+    logstd = tf.tile(
+        logstd[None, None],
+        [tf.shape(mean)[0], tf.shape(mean)[1]] + [1] * (mean.shape.ndims - 2))
+  with tf.variable_scope('value'):
+    x = flat_observations
+    for size in config.value_layers:
+      x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+    value = tf.contrib.layers.fully_connected(x, 1, None)[..., 0]
+  mean = tf.check_numerics(mean, 'mean')
+  logstd = tf.check_numerics(logstd, 'logstd')
+  value = tf.check_numerics(value, 'value')
+  policy = tf.contrib.distributions.MultivariateNormalDiag(
+      mean, tf.exp(logstd))
+  return NetworkOutput(policy, mean, logstd, value, state) 
+
+
+soccer-matlab
+def recurrent_gaussian(
+    config, action_size, observations, length, state=None):
+  """Independent recurrent policy and feed forward value networks.
+
+  The policy network outputs the mean action and the log standard deviation
+  is learned as independent parameter vector. The last policy layer is
+  recurrent and uses a GRU cell.
+
+  Args:
+    config: Configuration object.
+    action_size: Length of the action vector.
+    observations: Sequences of observations.
+    length: Batch of sequence lengths.
+    state: Batch of initial recurrent states.
+
+  Returns:
+    NetworkOutput tuple.
+  """
+  mean_weights_initializer = tf.contrib.layers.variance_scaling_initializer(
+      factor=config.init_mean_factor)
+  logstd_initializer = tf.random_normal_initializer(config.init_logstd, 1e-10)
+  cell = tf.contrib.rnn.GRUBlockCell(config.policy_layers[-1])
+  flat_observations = tf.reshape(observations, [
+      tf.shape(observations)[0], tf.shape(observations)[1],
+      functools.reduce(operator.mul, observations.shape.as_list()[2:], 1)])
+  with tf.variable_scope('policy'):
+    x = flat_observations
+    for size in config.policy_layers[:-1]:
+      x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+    x, state = tf.nn.dynamic_rnn(cell, x, length, state, tf.float32)
+    mean = tf.contrib.layers.fully_connected(
+        x, action_size, tf.tanh,
+        weights_initializer=mean_weights_initializer)
+    logstd = tf.get_variable(
+        'logstd', mean.shape[2:], tf.float32, logstd_initializer)
+    logstd = tf.tile(
+        logstd[None, None],
+        [tf.shape(mean)[0], tf.shape(mean)[1]] + [1] * (mean.shape.ndims - 2))
+  with tf.variable_scope('value'):
+    x = flat_observations
+    for size in config.value_layers:
+      x = tf.contrib.layers.fully_connected(x, size, tf.nn.relu)
+    value = tf.contrib.layers.fully_connected(x, 1, None)[..., 0]
+  mean = tf.check_numerics(mean, 'mean')
+  logstd = tf.check_numerics(logstd, 'logstd')
+  value = tf.check_numerics(value, 'value')
+  policy = tf.contrib.distributions.MultivariateNormalDiag(
+      mean, tf.exp(logstd))
+  # assert state.shape.as_list()[0] is not None
+  return NetworkOutput(policy, mean, logstd, value, state) 
+
+
+cs294-112_hws
+def load_policy(filename):
+    with open(filename, 'rb') as f:
+        data = pickle.loads(f.read())
+
+    # assert len(data.keys()) == 2
+    nonlin_type = data['nonlin_type']
+    policy_type = [k for k in data.keys() if k != 'nonlin_type'][0]
+
+    assert policy_type == 'GaussianPolicy', 'Policy type {} not supported'.format(policy_type)
+    policy_params = data[policy_type]
+
+    assert set(policy_params.keys()) == {'logstdevs_1_Da', 'hidden', 'obsnorm', 'out'}
+
+    # Keep track of input and output dims (i.e. observation and action dims) for the user
+
+    def build_policy(obs_bo):
+        def read_layer(l):
+            assert list(l.keys()) == ['AffineLayer']
+            assert sorted(l['AffineLayer'].keys()) == ['W', 'b']
+            return l['AffineLayer']['W'].astype(np.float32), l['AffineLayer']['b'].astype(np.float32)
+
+        def apply_nonlin(x):
+            if nonlin_type == 'lrelu':
+                return tf_util.lrelu(x, leak=.01) # openai/imitation nn.py:233
+            elif nonlin_type == 'tanh':
+                return tf.tanh(x)
+            else:
+                raise NotImplementedError(nonlin_type)
+
+        # Build the policy. First, observation normalization.
+        assert list(policy_params['obsnorm'].keys()) == ['Standardizer']
+        obsnorm_mean = policy_params['obsnorm']['Standardizer']['mean_1_D']
+        obsnorm_meansq = policy_params['obsnorm']['Standardizer']['meansq_1_D']
+        obsnorm_stdev = np.sqrt(np.maximum(0, obsnorm_meansq - np.square(obsnorm_mean)))
+        print('obs', obsnorm_mean.shape, obsnorm_stdev.shape)
+        normedobs_bo = (obs_bo - obsnorm_mean) / (obsnorm_stdev + 1e-6) # 1e-6 constant from Standardizer class in nn.py:409 in openai/imitation
+
+        curr_activations_bd = normedobs_bo
+
+        # Hidden layers next
+        assert list(policy_params['hidden'].keys()) == ['FeedforwardNet']
+        layer_params = policy_params['hidden']['FeedforwardNet']
+        for layer_name in sorted(layer_params.keys()):
+            l = layer_params[layer_name]
+            W, b = read_layer(l)
+            curr_activations_bd = apply_nonlin(tf.matmul(curr_activations_bd, W) + b)
+
+        # Output layer
+        W, b = read_layer(policy_params['out'])
+        output_bo = tf.matmul(curr_activations_bd, W) + b
+        return output_bo
+
+    obs_bo = tf.placeholder(tf.float32, [None, None])
+    a_ba = build_policy(obs_bo)
+    policy_fn = tf_util.function([obs_bo], a_ba)
+    return policy_fn 
+
+
+fine-lm
+def sru_with_scan(x,
+                  num_layers=2,
+                  activation=None,
+                  initial_state=None,
+                  name=None,
+                  reuse=None):
+  """SRU cell as in https://arxiv.org/abs/1709.02755.
+
+  This implementation uses tf.scan and can incur overhead, see the full SRU
+  function doc for details and an implementation that is sometimes faster.
+
+  Args:
+    x: A tensor of shape [batch, ..., channels] ; ... is treated as time.
+    num_layers: How many SRU layers; default is 2 as results for 1 disappoint.
+    activation: Optional activation function, try tf.nn.tanh or tf.nn.relu.
+    initial_state: Optional initial c-state, set to zeros if None.
+    name: Optional name, "sru" by default.
+    reuse: Optional reuse.
+
+  Returns:
+    A tensor of the same shape as x.
+
+  Raises:
+    ValueError: if num_layers is not positive.
+  """
+  if num_layers < 1:
+    raise ValueError("Number of layers must be positive: %d" % num_layers)
+  with tf.variable_scope(name, default_name="sru", values=[x], reuse=reuse):
+    # We assume x is [batch, ..., channels] and treat all ... as time.
+    x_shape = shape_list(x)
+    x = tf.reshape(x, [x_shape[0], -1, x_shape[-1]])
+    x = tf.transpose(x, [1, 0, 2])  # Scan assumes time on axis 0.
+    initial_state = initial_state or tf.zeros([x_shape[0], x_shape[-1]])
+
+    # SRU state manipulation function.
+    def next_state(cur_state, args_tup):
+      cur_x_times_one_minus_f, cur_f = args_tup
+      return cur_f * cur_state + cur_x_times_one_minus_f
+
+    # Calculate SRU on each layer.
+    for i in range(num_layers):
+      # The parallel part of the SRU.
+      x_orig = x
+      x, f, r = tf.split(
+          tf.layers.dense(x, 3 * x_shape[-1], name="kernel_%d" % i), 3, axis=-1)
+      f, r = tf.sigmoid(f), tf.sigmoid(r)
+      x_times_one_minus_f = x * (1.0 - f)  # Compute in parallel for speed.
+      # Calculate states.
+      c_states = tf.scan(
+          next_state, (x_times_one_minus_f, f),
+          initializer=initial_state,
+          parallel_iterations=2,
+          name="scan_%d" % i)
+      # Final output.
+      if activation is not None:
+        c_states = activation(c_states)
+      h = c_states * r + (1.0 - r) * x_orig
+      x = h  # Next layer.
+    # Transpose back to batch-major.
+    x = tf.transpose(x, [1, 0, 2])
+    return tf.reshape(x, x_shape) 
+
+
+lirpg
+def __init__(self, sess, ob_space, ac_space, nbatch, nsteps, reuse=False): #pylint: disable=W0613
+        nenv = nbatch // nsteps
+        ob_shape = (nbatch,) + ob_space.shape
+        nact = ac_space.n
+        X = tf.placeholder(tf.float32, ob_shape, name='Ob') #obs
+        with tf.variable_scope('intrinsic', reuse=reuse):
+            h3 = nature_cnn(X)
+            r_in0 = tf.tanh(fc(h3, 'r_in', nact))
+            v_ex0 = fc(h3, 'v_ex', 1)[:,0]
+        with tf.variable_scope('policy', reuse=reuse):
+            h3 = nature_cnn(X)
+            pi = fc(h3, 'pi', nact, init_scale=0.01)
+            v_mix0 = fc(h3, 'v_mix', 1)[:,0]
+
+        self.pdtype = make_pdtype(ac_space)
+        self.pd = self.pdtype.pdfromflat(pi)
+
+        a0 = self.pd.sample()
+        neglogp0 = self.pd.neglogp(a0)
+        self.init_policy_state = None
+
+        def step(ob, *_args, **_kwargs):
+            a, v_ex, v_mix, neglogp = sess.run([a0, v_ex0, v_mix0, neglogp0], {X:ob})
+            return a, v_ex, v_mix, self.init_policy_state, neglogp
+
+        def value(ob, *_args, **_kwargs):
+            v_ex, v_mix = sess.run([v_ex0, v_mix0], {X:ob})
+            return v_ex, v_mix
+
+        def intrinsic_reward(ob, ac, *_args, **_kwargs):
+            r_in = sess.run(r_in0, {X:ob})
+            return r_in[np.arange(nbatch), ac]
+
+        self.X = X
+        self.r_in = r_in0
+        self.v_ex = v_ex0
+        self.pi = pi
+        self.v_mix = v_mix0
+        self.step = step
+        self.value = value
+        self.intrinsic_reward = intrinsic_reward
+        self.policy_params = tf.trainable_variables("policy")
+        self.intrinsic_params = tf.trainable_variables("intrinsic")
+        self.policy_new_fn = CnnPolicyNew 
+
+
+progressive_growing_of_GANs
+def build_generator(self, training):
+        z = self.tf_placeholders['z']
+        z_dim = self.cfg.z_dim
+        feat_size = self.min_res
+        norm = self.cfg.norm_g
+
+        with tf.variable_scope('generator', reuse=(not training)):
+            net = tf.reshape(z, (-1, 1, 1, z_dim))
+            padding = int(feat_size / 2)
+            net = tf.pad(net, [[0, 0], [padding - 1, padding],
+                               [padding - 1, padding], [0, 0]])
+            feat_depth = min(self.nf_max, self.nf_min * 2 ** self.n_scalings)
+            r = self.min_res
+            var_scope = '{0:}x{0:}'.format(r)
+            with tf.variable_scope(var_scope):
+                net = self.conv_module(net, [feat_depth, feat_depth],
+                                       training, k_sizes=[4, 3],
+                                       norms=[None, norm])
+            layers = []
+            for i in range(self.n_layers):
+                net = self.up_sample(net)
+                n = self.nf_min * 2 ** (self.n_scalings - i - 1)
+                feat_depth = min(self.nf_max, n)
+                r *= 2
+                var_scope = '{0:}x{0:}'.format(r)
+                with tf.variable_scope(var_scope):
+                    net = self.conv_module(net, [feat_depth, feat_depth],
+                                           training, norms=[norm, norm])
+                layers.append(net)
+
+            # final layer:
+            assert r == self.res, \
+                '{:} not equal to {:}'.format(r, self.res)
+            net = self.to_image(net, self.res)
+            if self.cfg.transition:
+                alpha = self.tf_placeholders['alpha']
+                branch = layers[-2]
+                branch = self.up_sample(branch)
+                branch = self.to_image(branch, r / 2)
+                net = alpha * net + (1. - alpha) * branch
+            if self.cfg.use_tanh:
+                net = tf.tanh(net)
+            return net 
+
+
+UROP-Adversarial-Feature-Matching-for-Text-Generation
+def generate(self, z):
+		# forgive me. I also don't know what this is. The author doesn't mention
+		# it in the paper and gives no comments for it in his code.
+		h = tf.tanh(tf.matmul(z, self.C0) + self.b0) # [batch_size, hidden_size]
+		# The expanded dimension is timestep. Following codes are used to prepare the first h
+		h = tf.expand_dims(h, axis=0) # [1, batch_size, hidden_size]
+		y = tf.einsum('ijk,ka->ija', h, self.Vhid) # [1, batch_size, vocab_size]
+		c = tf.zeros(tf.shape(h)) # [1, batch_size, hidden_size]
+		y_max = tf.reduce_max(y, axis=1, keep_dims=True) # [1, 1, vocab_size]
+		e = tf.exp((y - y_max) * self.L) # [1, batch_size, vocab_size]
+		w0 = e / tf.reduce_sum(e, axis=1, keep_dims=True) # [1, batch_size, vocab_size]
+		y = tf.einsum('ijk,ka->ija', w0, self.Wemb) # [1, batch_size, input_dim]
+		h_all = tf.identity(h) # [1, batch_size, hidden_size]
+		for i in range(self.timestep - 1):
+			y, h, c = self.lstm(y, h, c, z)
+			h_all = tf.concat((h_all, h), axis=0)
+		# h_all: [timestep, batch_size, hidden_size]
+		shape_w = tf.shape(h_all) # [timestep, batch_size, hidden_size]
+		h_all = tf.reshape(h_all, [shape_w[0] * shape_w[1], shape_w[2]]) # [timestep * batch_size, hidden_size]
+		pred_w = tf.matmul(h_all, self.Vhid) + self.bhid # [timestep * batch_size, vocab_size]
+
+		max_w = tf.reduce_max(pred_w, axis=1, keep_dims=True) # [timestep * batch_size, 1]
+		e0 = tf.exp((pred_w - max_w) * self.L) # [timestep * batch_size, vocab_size]
+		pred_w = e0 / tf.reduce_sum(e0, axis=1, keep_dims=True) # [timestep * batch_size, vocab_size]
+		
+		self.max_print = tf.reduce_max(pred_w, axis=1) # [timestep * batch_size, 1]
+		self.max_print = tf.transpose(tf.reshape(self.max_print, [self.timestep, self.batch_size]), [1, 0]) # [batch_size, timestep]
+
+		# Add PAD before beginning and after ending
+		# NOTICE that timestep also modified after this part!
+		pred_w = tf.reshape(pred_w, [self.timestep, self.batch_size, self.vocab_size]) # [timestep, batch_size, vocab_size]
+		pred_w = tf.transpose(pred_w, [1, 0, 2]) # [batch_size, timestep, vocab_size]
+		pad = max(self.window) - 1
+		end_mat = tf.concat([tf.ones([self.batch_size, pad, 1]), tf.zeros([self.batch_size, pad, self.vocab_size - 1])], axis=2) # [batch_size, pad, vocab_size]
+		pred_w = tf.concat([end_mat, pred_w, end_mat],axis=1) # [batch_size, timestep, vocab_size]
+		self.timestep = self.timestep + 2 * pad
+		pred_w = tf.reshape(pred_w, [self.timestep * self.batch_size, self.vocab_size]) # [timestep * batch_size, vocab_size]
+
+		generatee = tf.matmul(pred_w, self.Wemb) # [timestep * batch_size, input_dim]
+		generatee = tf.nn.dropout(generatee, keep_prob=self.keep_prob)
+		generatee = tf.reshape(generatee, [self.batch_size, self.timestep, self.input_dim, 1]) # [batch_size, timestep, input_dim, 1]
+		return pred_w, generatee
+
+	# Following code copied here:
+	# https://stackoverflow.com/questions/17219481/save-to-file-and-load-an-instance-of-a-python-class-with-its-attributes 
+
+

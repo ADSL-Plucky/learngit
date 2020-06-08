@@ -1,0 +1,10 @@
+select name,age,cls_id from students where gender = "男" ;
+select * from students where id < 4 or is_delete = 0 ;
+select * from students where name like "黄%" ;
+select * from students where id = 1 or id = 3 or id = 8 ;
+select * from students where id between 3 and 8 ;
+select * from students where gender = "男" and is_delete = 0 order by age DESC ;
+select count(*) from students where gender = "女" ;
+select avg(age) as avgage from students ;
+select avg(age) as avgage,gender from students group by gender ;
+select gender,group_concat(name) from students group by gender ;
